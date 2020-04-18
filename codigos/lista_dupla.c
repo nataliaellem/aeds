@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+//123
 typedef struct list{
 	int data;
 	struct list *next;
@@ -10,6 +10,8 @@ typedef struct list{
 List* create_list(){
 	return NULL;
 }
+
+
 
 List* insert(List *list, int data){
 	if (list==NULL){
@@ -39,17 +41,19 @@ void print_list(List *list){
 		aux2=aux;
 	}
 	printf("\n");
-	// for (aux2=list; aux2->next!=NULL; aux2=aux2->next);
-
-	for (aux2=aux2; aux2!=NULL; aux2=aux2->prev){
-		printf(" %d -> ", aux2->data);
-	}
-	printf("\n");
 } 
 
-int exists(List* list, int n){
+void print_list_reverse(List *list){
+	List *aux;
+	for (aux=aux; aux!=NULL; aux=aux->prev){
+		printf(" %d -> ", aux->data);
+	}
+	printf("\n");
+}
+
 //Return 0 if element not exists in list
 //Return 1 if element does exist in list
+int exists(List* list, int n){
 	List *aux;
 	for (aux=list; aux->next!=NULL; aux=aux->next){
 		if (aux->data == n){
@@ -80,6 +84,41 @@ List* remove_from_list(List *list, int n){
 	return list;
 }
 
+List* insert_in_position(List *list, int info, int position){
+	List *aux;
+	int contador=0;
+	for (aux=list; aux->next!=NULL; aux = aux->next){
+		contador++;
+		if (contador == position){
+			printf("DEBUG\n");
+			List *new_block = (List*) malloc(sizeof(List));
+			if (aux->prev==NULL){
+				new_block->prev=NULL;
+				new_block->next=aux;
+				aux->prev=new_block;
+				new_block->data=info;
+				list=new_block;
+				return list;
+			} else {
+				new_block->data = info;
+				aux->prev->next=new_block;
+				new_block->prev=aux->prev;
+				aux->prev=new_block;
+				new_block->next=aux;
+				return list;
+			}
+		}
+	}
+	contador++;
+	if (position==contador+1){
+		list=insert(list, info);
+		return list;
+	} else if(position>contador+1){
+		return NULL;
+	}
+	return list;
+}
+
 int main(){
 	List *list = create_list();	
 	list = insert(list, 1);
@@ -88,9 +127,7 @@ int main(){
 	list = insert(list, 4);
 	list = insert(list, 5);
 	print_list(list);
-	list = remove_from_list(list, 3);
-	list = remove_from_list(list, 1);
-	list = remove_from_list(list, 5);
+	list = insert_in_position(list, 6, 6);
 	print_list(list);
 
 	return 0;
