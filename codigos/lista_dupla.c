@@ -119,15 +119,31 @@ List* insert_in_position(List *list, int info, int position){
 	return list;
 }
 
+List* bubble_sort(List *list){
+	List *i, *j;
+	int aux;
+	for (i=list; i!=NULL; i=i->next){
+		for (j=i; j!=NULL; j=j->next){
+			if (j->data < i->data){
+				aux=i->data;
+				i->data=j->data;
+				j->data=aux;
+			}
+		}
+	}
+	return list;
+}
+
 int main(){
 	List *list = create_list();	
+	list = insert(list, 5);
 	list = insert(list, 1);
 	list = insert(list, 2);
 	list = insert(list, 3);
 	list = insert(list, 4);
-	list = insert(list, 5);
 	print_list(list);
-	list = insert_in_position(list, 6, 6);
+	list = bubble_sort(list);
+	//list = insert_in_position(list, 6, 6);
 	print_list(list);
 
 	return 0;
