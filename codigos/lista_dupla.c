@@ -134,6 +134,20 @@ List* bubble_sort(List *list){
 	return list;
 }
 
+List *insertion_sort(List *list){
+	List *aux, *aux2;
+	for(aux=list->next; aux!=NULL; aux=aux->next){
+		for(aux=aux; aux->prev!=NULL; aux=aux->prev){
+			while (aux->data < aux->prev->data){
+					aux2->data = aux->data;
+					aux->data = aux->prev->data;
+					aux->prev->data = aux2->data;
+			}
+		}
+	}
+	return list;
+}
+
 int main(){
 	List *list = create_list();	
 	list = insert(list, 5);
@@ -142,8 +156,9 @@ int main(){
 	list = insert(list, 3);
 	list = insert(list, 4);
 	print_list(list);
-	list = bubble_sort(list);
+	//list = bubble_sort(list);
 	//list = insert_in_position(list, 6, 6);
+	list = insertion_sort(list);
 	print_list(list);
 
 	return 0;
