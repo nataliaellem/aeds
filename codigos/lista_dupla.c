@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-//123
+
 typedef struct list{
 	int data;
 	struct list *next;
@@ -119,6 +119,7 @@ List* insert_in_position(List *list, int info, int position){
 	return list;
 }
 
+
 List* bubble_sort(List *list){
 	List *i, *j;
 	int aux;
@@ -133,6 +134,7 @@ List* bubble_sort(List *list){
 	}
 	return list;
 }
+
 
 void insertion_sort(List *list){
 	List *i, *j;
@@ -151,8 +153,23 @@ void insertion_sort(List *list){
 
 }
 
-
-
+List* selection_sort(List *list){
+	List *i, *j;
+	for (j=list;j->next!=NULL; j=j->next){
+		List *menor = j;
+		i=j->next;
+		while (i!=NULL){  
+			if (i->data < menor->data){
+				menor=i;
+				i=i->next;
+			}
+		}
+		int x = j->data;
+		j->data=menor->data;
+		menor->data = x;
+	}
+	return list;
+}
 int main(){
 	List *list = create_list();	
 	list = insert(list, 5);
@@ -162,9 +179,9 @@ int main(){
 	list = insert(list, 4);
 	print_list(list);
 	//list = bubble_sort(list);
-	//list = insert_in_position(list, 6, 6);
-	insertion_sort(list);
+	list = insert_in_position(list, 0, 1);
+	//insertion_sort(list);
+	selection_sort(list);
 	print_list(list);
-
 	return 0;
 }
