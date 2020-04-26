@@ -29,7 +29,7 @@ List* insert(List *list, int data){
 		new_block->next = (List*) NULL;
 		aux->next = new_block;
 	}
-	
+
 	return list;
 }
 
@@ -41,7 +41,7 @@ void print_list(List *list){
 		aux2=aux;
 	}
 	printf("\n");
-} 
+}
 
 void print_list_reverse(List *list){
 	List *aux;
@@ -79,7 +79,7 @@ List* remove_from_list(List *list, int n){
 				aux->next->prev=aux->prev;
 				return list;
 			}
-		}		
+		}
 	}
 	return list;
 }
@@ -158,29 +158,25 @@ List* selection_sort(List *list){
 	for (j=list;j->next!=NULL; j=j->next){
 		List *menor = j;
 		i=j->next;
-		while (i!=NULL){  
-			if (i->data < menor->data){
-				menor=i;
-				i=i->next;
-			}
+		while (i!=NULL) {
+			if (i->data < menor->data) menor=i;
+			i=i->next;
 		}
 		int x = j->data;
-		j->data=menor->data;
+		j->data = menor->data;
 		menor->data = x;
 	}
 	return list;
 }
-int main(){
-	List *list = create_list();	
+
+int main() {
+	List *list = create_list();
 	list = insert(list, 5);
-	list = insert(list, 1);
-	list = insert(list, 2);
-	list = insert(list, 3);
 	list = insert(list, 4);
+	list = insert(list, 3);
+	list = insert(list, 2);
+	list = insert(list, 1);
 	print_list(list);
-	//list = bubble_sort(list);
-	list = insert_in_position(list, 0, 1);
-	//insertion_sort(list);
 	selection_sort(list);
 	print_list(list);
 	return 0;
