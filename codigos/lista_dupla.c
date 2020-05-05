@@ -169,6 +169,22 @@ List* selection_sort(List *list){
 	return list;
 }
 
+void gc(List *list){
+	if (list->next!=NULL){
+		gc(list->next);
+	}
+	free(list);
+
+}
+
+void gc_tco(List *list, List *prox){
+	free(list);
+	if (prox!=NULL){
+		gc(prox, prox->next);
+	}
+}
+
+
 int main() {
 	List *list = create_list();
 	list = insert(list, 5);
@@ -179,5 +195,8 @@ int main() {
 	print_list(list);
 	selection_sort(list);
 	print_list(list);
+	gc_tco(list, list->next);
+	print_list(list);
+
 	return 0;
 }
