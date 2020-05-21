@@ -3,6 +3,7 @@
 
 int len(int *pointer){
 	int size = (sizeof pointer) / (sizeof pointer[0]);
+	//return size; 
 	return 5;
 }
 
