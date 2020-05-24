@@ -34,8 +34,8 @@ void print_tree_inorder(Node *node) {
 
 void print_tree_postorder(Node *node) {
   if (node != NULL) {
-    print_tree_inorder(node->left);
-    print_tree_inorder(node->right);
+    print_tree_postorder(node->left);
+    print_tree_postorder(node->right);
     printf("%d -> ", node->data);
   }
 }
@@ -69,16 +69,52 @@ void insert_inorder(Node *node, int value) {
   }
 }
 
+void insert_postorder(Node *node, int value){
+  if (node != NULL) {
+    if (value <= node->data) {
+      if (node->left == NULL) {
+        node->left = new_node(value);
+      }
+      else if (node->left != NULL && node->right == NULL) {
+        if (value > node->left->data){
+          node->right = new_node(value);
+        }
+        else {
+          int aux = node->left->data;
+          node->left->data = value;
+          node->right = new_node(aux);
+        }
+
+      }
+      else if (node->left != NULL && node->right != NULL) {
+        if (value > node->right->data) {
+          int aux2 = node->right->data;
+          node->right->data = value;
+          insert_postorder(node->right, aux2);
+          print_tree_postorder(node->right);
+          printf("\n");
+        } else if (value < node->left->data){
+          insert_postorder(node->left, value);
+        } else if (value > node->left->data && value < node->right->data){
+          insert_postorder(node->right, value);
+        }
+      }
+    } else if (value > node->data) {
+      int aux = node->data;
+      node->data = value;
+      insert_postorder(node, aux);
+    }
+  }
+}
+
 void main() {
-  Tree tree = new_tree(5);
-
-  insert_inorder(tree.root, 1);
-  insert_inorder(tree.root, 7);
-  insert_inorder(tree.root, 4);
-  insert_inorder(tree.root, 3);
-  insert_inorder(tree.root, 2);
-  insert_inorder(tree.root, 6);
-
-  print_tree_inorder(tree.root);
+  Tree tree = new_tree(2);
+  insert_postorder(tree.root, 7);
+  insert_postorder(tree.root, 4);
+  insert_postorder(tree.root, 3);
+  insert_postorder(tree.root, 1);
+  insert_postorder(tree.root, 6);
+  insert_postorder(tree.root, 5);
+  print_tree_postorder(tree.root);
   printf("\n");
 }
