@@ -1,39 +1,8 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-
-typedef struct user {
-  char *name;
-  char *email;
-  char *password;
-} User;
-
-void printf_email(User user){
-  printf("%s\n", user.email);
-}
-
-void printf_name(User user){
-  printf("%s\n", user.name);
-}
-
-void each_user(User *users, void (*block)(User), int users_length) {
-  for (size_t i = 0; i < users_length; i++) {
-    (*block)(users[i]);
-  }
-}
-// Lists functions
-//////////////////////////////////////////////////////////////////
-typedef struct list{
-	char *data;
-	struct list *next;
-	struct list *prev;
-} List;
+#include "../includes/linked_list.h"
 
 List* create_list(){
 	return NULL;
 }
-
-
 
 List* insert(List *list, char* data){
 	if (list==NULL){
@@ -114,7 +83,6 @@ List* insert_in_position(List *list, char *info, int position){
 	for (aux=list; aux->next!=NULL; aux = aux->next){
 		contador++;
 		if (contador == position){
-			printf("DEBUG\n");
 			List *new_block = (List*) malloc(sizeof(List));
 			if (aux->prev==NULL){
 				new_block->prev=NULL;
@@ -141,45 +109,4 @@ List* insert_in_position(List *list, char *info, int position){
 		return NULL;
 	}
 	return list;
-}
-
-List* map_users(User *users, char* (*block)(), int length){
-  List *new_list = create_list();
-  for (size_t i = 0; i < length; i++) {
-    new_list = insert(new_list, (*block)(users[i]));
-  }
-  return new_list;
-}
-
-char* get_user_name(User user){
-  char *aux = user.name;
-  return aux;
-}
-
-int main() {
-  User users[3];
-
-  for (size_t i = 0; i < 3; i++) {
-    users[i].name = (char*) malloc(50 * sizeof(char));
-    users[i].email = (char*) malloc(50 * sizeof(char));
-    users[i].password = (char*) malloc(50 * sizeof(char));
-  }
-
-  strcpy(users[0].name, "Natalia");
-  strcpy(users[1].name, "Alan");
-  strcpy(users[2].name, "Pedro");
-  strcpy(users[0].email, "natalia@gmail.com");
-  strcpy(users[1].email, "alan@gmail.com");
-  strcpy(users[2].email, "pedro@gmail.com");
-  strcpy(users[0].password, "123");
-  strcpy(users[1].password, "123");
-  strcpy(users[2].password, "123");
-
-  each_user(users, printf_email, 3);
-  each_user(users, printf_name, 3);
-
-  List *users_names = map_users(users, get_user_name, 3);
-
-  print_list(users_names);
-  return 0;
 }
