@@ -1,0 +1,35 @@
+#ifndef USER_H
+#define USER_H
+
+#include <stdio.h>
+#include <string.h>
+#include "linked_list.h"
+
+// Structs
+typedef struct user {
+  char *name;
+  int age;
+  char *email;
+  char *password;
+} User;
+
+// Enumerables
+void  each_user(User *users, void (*block)(User), int users_length);
+List* map_users(User *users, char* (*block)(), int length);
+// Inspects
+void printf_email(User user);
+void printf_name(User user);
+void printf_password(User user);
+void printf_age(User user);
+// Getters
+char* get_user_name(User user);
+char* get_user_email(User user);
+char* get_user_password(User user);
+int   get_user_age(User user);
+// Setters
+void  set_user_name(User *user, char* name);
+void  set_user_email(User *user, char* email);
+void  set_user_password(User *user, char* password);
+void  set_user_age(User *user, int age);
+
+#endif
