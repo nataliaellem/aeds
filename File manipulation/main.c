@@ -29,7 +29,6 @@ void list_users(){
     i++;
   }
   fclose(file);
-
   // imprime usuários
   each_user(users, printf_user_attributes, count_file_lines);
 }
@@ -61,8 +60,7 @@ void create_user(){
 int main() {
   int k = 1, option;
   system("clear");
-  printf("Eai, seu baitola!\n");
-  printf("Suave?\n");
+  printf("Hello you!\n");
   while (k) {
     printf("Para ver a lista de usuários digite 1, para se cadastrar como novo usuário digite 2 e para sair digite 3.\n");
     scanf("%d", &option);
