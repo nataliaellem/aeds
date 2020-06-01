@@ -21,6 +21,7 @@ void printf_email(User user);
 void printf_name(User user);
 void printf_password(User user);
 void printf_age(User user);
+void printf_user_attributes(User user);
 // Getters
 char* get_user_name(User user);
 char* get_user_email(User user);

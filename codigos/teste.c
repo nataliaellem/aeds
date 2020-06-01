@@ -1,10 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+void sum(int *a){
+	*a = *a + 1;
+}
+
 int main(){
-	int array[6] = {1,2,3,4,5,6};
-	for (int i=0; i<6; i++){
-		printf("%d", array[i]);
-	}
-	return 0
+	int a = 1;
+	printf("%d\n", a);
+	a++;
+	printf("%d\n", a);
+	sum(&a);
+	printf("%d\n", a);
+	return 0;
 }

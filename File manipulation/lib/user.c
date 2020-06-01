@@ -4,6 +4,7 @@
 void each_user(User *users, void (*block)(User), int users_length) {
   for (size_t i = 0; i < users_length; i++) {
     (*block)(users[i]);
+    printf("\n");
   }
 }
 
@@ -30,6 +31,13 @@ void printf_password(User user){
 
 void printf_age(User user){
   printf("%d\n", user.age);
+}
+
+void printf_user_attributes(User user){
+  printf("%s,", user.name);
+  printf(" %s,", user.email);
+  printf(" %s,", user.password);
+  printf(" %d.", user.age);
 }
 
 // Getters

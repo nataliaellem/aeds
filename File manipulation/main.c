@@ -3,7 +3,7 @@
 #include <strings.h>
 #include "includes/user.h"
 
-int main() {
+void list_users(){
   FILE *file = fopen("storage/users.csv", "r");
   int count_file_lines = 0;
 
@@ -16,7 +16,6 @@ int main() {
     if (c == '\n')
       count_file_lines ++;
 
-  printf("Count: %d\n", count_file_lines);
   User *users = (User*) malloc(count_file_lines * sizeof(User));
   int i = 0;
   rewind(file);
@@ -29,12 +28,57 @@ int main() {
     set_user_age(&users[i], atoi(fourth_column));
     i++;
   }
-
-  each_user(&users[0], printf_name, count_file_lines);
-  each_user(&users[0], printf_email, count_file_lines);
-  each_user(&users[0], printf_password, count_file_lines);
-  each_user(&users[0], printf_age, count_file_lines);
-
   fclose(file);
+
+  // imprime usuários
+  each_user(users, printf_user_attributes, count_file_lines);
+}
+
+void create_user(){
+  printf("Digite o nome do usuario: ");
+  char *name = (char*) malloc(50*sizeof(char));
+  char *email = (char*) malloc(50*sizeof(char));
+  char *pass = (char*) malloc(50*sizeof(char));
+  int age;
+  scanf("%s", name);
+  printf("\n");
+  printf("Digite o email: ");
+  scanf("%s", email);
+  printf("\n");
+  printf("Digite a senha: ");
+  scanf("%s", pass);
+  printf("\n");
+  printf("Digite a idade: ");
+  scanf("%d", &age);
+  printf("\n");
+  printf("%s, %s, %s, %d, ", name, email, pass, age);
+  FILE *file = fopen("storage/users.csv", "a");
+  fprintf(file, "%s, %s, %s, %d,\n", name, email, pass, age);
+  fclose(file);
+
+}
+
+int main() {
+  int k = 1, option;
+  system("clear");
+  printf("Eai, seu baitola!\n");
+  printf("Suave?\n");
+  while (k) {
+    printf("Para ver a lista de usuários digite 1, para se cadastrar como novo usuário digite 2 e para sair digite 3.\n");
+    scanf("%d", &option);
+    switch (option) {
+      case 1:
+      list_users();
+      break;
+      case 2:
+        create_user();
+        break;
+      case 3:
+        k=0;
+        break;
+      default:
+        printf("Opcao invalida, escolha novamente\n");
+    }
+  }
   return 0;
 }
