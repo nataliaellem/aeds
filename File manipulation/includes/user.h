@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "linked_list.h"
 
 // Structs
@@ -15,7 +16,8 @@ typedef struct user {
 
 // Enumerables
 void  each_user(User *users, void (*block)(User), int users_length);
-List* map_users(User *users, char* (*block)(), int length);
+List* map_list(User *users, char* (*block)(User), int length);
+char** map_users(User *users, char* (*block)(User), int length);
 // Inspects
 void printf_email(User user);
 void printf_name(User user);
@@ -32,5 +34,7 @@ void  set_user_name(User *user, char* name);
 void  set_user_email(User *user, char* email);
 void  set_user_password(User *user, char* password);
 void  set_user_age(User *user, int age);
+
+char** alocar_matriz(int m, int n);
 
 #endif

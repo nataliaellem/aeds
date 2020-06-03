@@ -3,7 +3,7 @@
 #include <strings.h>
 #include "includes/user.h"
 
-void list_users(){
+User* list_users(){
   FILE *file = fopen("storage/users.csv", "r");
   int count_file_lines = 0;
 
@@ -19,8 +19,8 @@ void list_users(){
   User *users = (User*) malloc(count_file_lines * sizeof(User));
   int i = 0;
   rewind(file);
+  char first_column[50], second_column[50], third_column[50], fourth_column[50];
   while(!feof(file)) {
-    char first_column[50], second_column[50], third_column[50], fourth_column[50];
     fscanf(file, "%[^,],%[^,],%[^,],%[^,],\n", first_column, second_column, third_column, fourth_column);
     set_user_name(&users[i], first_column);
     set_user_email(&users[i], second_column);
@@ -29,9 +29,13 @@ void list_users(){
     i++;
   }
   fclose(file);
-  // imprime usuários
+  // printf("Primeiro caracter da primeira coluna: %c\n", first_column[0]);
+  // printf("First column: %s\n", first_column);
+  // printf("Numero de linhas do arquivo: %d\n", count_file_lines);
   each_user(users, printf_user_attributes, count_file_lines);
+  return users;
 }
+
 
 void create_user(){
   printf("Digite o nome do usuario: ");
@@ -78,5 +82,11 @@ int main() {
         printf("Opcao invalida, escolha novamente\n");
     }
   }
+  system("clear");
+  User *users = list_users();
+  char auxi[6] = "teste";
+  printf("%s\n", auxi);
+  char **emails = map_users(users, get_user_email, 5);
+  printf("Email: %s\n", emails[0]);
   return 0;
 }
