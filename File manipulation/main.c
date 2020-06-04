@@ -87,6 +87,6 @@ int main() {
   char auxi[6] = "teste";
   printf("%s\n", auxi);
   char **emails = map_users(users, get_user_email, 5);
-  printf("Email: %s\n", emails[0]);
+  //printf("Email: %s\n", emails[0]);
   return 0;
 }
