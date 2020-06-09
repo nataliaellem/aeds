@@ -48,6 +48,7 @@ void print_list_users(){
   User *users = list_users(file);
   fclose(file);
   each_user(users, printf_user_attributes, count_file_lines);
+  printf("\n\n");
 }
 
 void print_list_emails() {
@@ -65,6 +66,7 @@ void print_list_emails() {
   for (int i = 0; i < count_file_lines; i++) {
     printf("%s\n", emails[i]);
   }
+  printf("\n\n");
 }
 
 

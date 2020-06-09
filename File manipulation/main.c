@@ -7,12 +7,12 @@
 
 int main() {
   int k = 1, option;
-  int l = 1;
   system("clear");
   printf("BEM VINDO!\n\n");
   while (k) {
     User *authenticated_user = login();
     if (authenticated_user){
+      int l = 1;
       while (l){
         printf("ESCOLHA UMA OPCAO:\n");
         printf("\t(1): Listar usuarios do sistema\n");
@@ -20,7 +20,7 @@ int main() {
         printf("\t(3): Criar novo usuario\n");
         printf("\t(4): Ler a tabela de log\n");
         printf("\t(5): Fazer logout\n");
-        printf("\t(N/D): Sair do sistema\n");
+        printf("\t(6): Sair do sistema\n");
         printf("Digite e pressione enter: ");
         scanf("%d", &option);
         logger(option, authenticated_user);
@@ -41,9 +41,15 @@ int main() {
           case 5:
             l=0;
             break;
+          case 6:
+            l=0;
+            k=0;
+            break;
           default:
+            l=0;
             k=0;
             printf("Opcao invalida, escolha novamente\n");
+            break;
         }
 
       }

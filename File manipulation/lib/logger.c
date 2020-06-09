@@ -40,6 +40,6 @@ int read_log_table(){
   }
   rewind(file);
   fclose(file);
-  printf("\n");
+  printf("\n\n");
   return 0;
 }
