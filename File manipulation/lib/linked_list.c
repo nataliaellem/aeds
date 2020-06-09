@@ -38,7 +38,7 @@ void print_list(List *list){
 
 void print_list_reverse(List *list){
 	List *aux;
-	for (aux=aux; aux!=NULL; aux=aux->prev){
+	for (aux; aux!=NULL; aux=aux->prev){
 		printf(" %s -> ", aux->data);
 	}
 	printf("\n");
@@ -58,18 +58,18 @@ int exists(List* list, int n){
 
 List* remove_from_list(List *list, int n){
 	List *aux;
-	for (aux=list; aux!=NULL; aux=aux->next){
-		if (aux->data==n){
-			if (aux->prev==NULL){
+	for (aux = list; aux != NULL; aux = aux->next){
+		if (aux->data == n){
+			if (aux->prev == NULL){
 				aux->next->prev = NULL; //o aux->prev e igual a NULL
-				list=aux->next;
+				list = aux->next;
 				return list;
-			} else if (aux->next==NULL){
+			} else if (aux->next == NULL){
 				aux->prev->next = NULL;
 				return list;
 			} else {
-				aux->prev->next=aux->next;
-				aux->next->prev=aux->prev;
+				aux->prev->next = aux->next;
+				aux->next->prev = aux->prev;
 				return list;
 			}
 		}

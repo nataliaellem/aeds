@@ -1,5 +1,104 @@
 #include "../includes/user.h"
 
+User* list_users(FILE *file) {
+  int count_file_lines = 0;
+
+  if (file == NULL) {
+    printf("Arquivo não pode ser aberto\n");
+    return 0;
+  }
+
+  for (char c = getc(file); c != EOF; c = getc(file))
+    if (c == '\n')
+      count_file_lines ++;
+
+  User *users = (User*) malloc(count_file_lines * sizeof(User));
+  int i = 0;
+  rewind(file);
+  char first_column[50], second_column[50], third_column[50], fourth_column[50], fifth_column[50];
+  while(!feof(file)) {
+    fscanf(file, "%[^,],%[^,],%[^,],%[^,],%[^,],\n", first_column, second_column, third_column, fourth_column, fifth_column);
+    // Initializing user object
+    new_user(&users[i]);
+    set_user_name(&users[i], first_column);
+    set_user_email(&users[i], second_column);
+    set_user_password(&users[i], third_column);
+    set_user_age(&users[i], atoi(fourth_column));
+    set_user_id(&users[i], atoi(fifth_column));
+    i++;
+  }
+
+  return users;
+}
+
+void print_list_users(){
+  FILE *file = fopen("storage/users.csv", "r");
+  int count_file_lines = 0;
+
+  if (file == NULL) {
+    printf("Arquivo não pode ser aberto\n");
+    return;
+  }
+
+  for (char c = getc(file); c != EOF; c = getc(file))
+    if (c == '\n')
+      count_file_lines ++;
+
+  rewind(file);
+  User *users = list_users(file);
+  fclose(file);
+  each_user(users, printf_user_attributes, count_file_lines);
+}
+
+void print_list_emails() {
+  FILE *file = fopen("storage/users.csv", "r");
+  int count_file_lines = 0;
+
+  for (char c = getc(file); c != EOF; c = getc(file))
+    if (c == '\n')
+      count_file_lines ++;
+  rewind(file);
+
+  User *users = list_users(file);
+  char **emails = map_users(users, get_user_email, count_file_lines);
+
+  for (int i = 0; i < count_file_lines; i++) {
+    printf("%s\n", emails[i]);
+  }
+}
+
+
+void create_user(){
+  printf("Digite o nome do usuario: ");
+  char *name = (char*) malloc(50*sizeof(char));
+  char *email = (char*) malloc(50*sizeof(char));
+  char *pass = (char*) malloc(50*sizeof(char));
+  int age;
+  int id;
+  scanf("%s", name);
+  printf("\n");
+  printf("Digite o email: ");
+  scanf("%s", email);
+  printf("\n");
+  printf("Digite a senha: ");
+  scanf("%s", pass);
+  printf("\n");
+  printf("Digite a idade: ");
+  scanf("%d", &age);
+  printf("\n");
+  printf("%s, %s, %s, %d, \n", name, email, pass, age);
+  FILE *users_id_seq = fopen("storage/users_id.val", "r");
+  fscanf(users_id_seq, "%d\n", &id);
+  fclose(users_id_seq);
+  id++;
+  users_id_seq = fopen("storage/users_id.val", "w");
+  fprintf(users_id_seq, "%d", id);
+  fclose(users_id_seq);
+  FILE *file = fopen("storage/users.csv", "a");
+  fprintf(file, "%s,%s,%s,%d,%d\n", name, email, pass, age, id);
+  fclose(file);
+}
+
 // Initializer
 void new_user(User *user) {
   user->name = (char*) malloc(50 * sizeof(char));
@@ -26,7 +125,7 @@ List* map_list(User *users, char* (*block)(User), int length){
 char** map_users(User *users, char* (*block)(User), int length){
   char **mapping = (char**) malloc(length * sizeof(char*));
 
-  for (size_t i = 0; i < length; i++)
+  for (int i = 0; i < length; i++)
     mapping[i] = (char*) malloc(50 * sizeof(char));
 
   for (int i = 0; i < length; i++) {
@@ -85,6 +184,11 @@ int get_user_age(User user){
   return age;
 }
 
+int get_user_id(User user){
+  int id = user.id;
+  return id;
+}
+
 // Setters
 void set_user_name(User *user, char* name){
   strcpy(user->name, name);
@@ -100,4 +204,8 @@ void set_user_password(User *user, char* password){
 
 void set_user_age(User *user, int age){
   user->age = age;
+}
+
+void set_user_id(User *user, int id){
+  user->id = id;
 }

@@ -11,7 +11,9 @@ all: build clean
 build:
 	$(CC) $(CFLAGS) -c lib/linked_list.c -o linked_list.out
 	$(CC) $(CFLAGS) -c lib/user.c -o user.out
-	$(CC) $(CFLAGS) main.c linked_list.out user.out -o $(EXEC)
+	$(CC) $(CFLAGS) -c lib/login.c -o login.out
+	$(CC) $(CFLAGS) -c lib/logger.c -o logger.out
+	$(CC) $(CFLAGS) main.c linked_list.out user.out login.out logger.out -o $(EXEC)
 
 clean:
-	rm -rf linked_list.out user.out
+	rm -rf linked_list.out user.out login.out logger.out

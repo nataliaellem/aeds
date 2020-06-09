@@ -9,10 +9,16 @@
 // Structs
 typedef struct user {
   char *name;
-  int age;
   char *email;
   char *password;
+  int age;
+  int id;
 } User;
+
+User* list_users(FILE *file);
+void print_list_users();
+void print_list_emails();
+void create_user();
 
 // Initializer
 void new_user(User *user);
@@ -32,12 +38,12 @@ char*   get_user_name(User user);
 char*   get_user_email(User user);
 char*   get_user_password(User user);
 int     get_user_age(User user);
+int     get_user_id(User user);
 // Setters
 void    set_user_name(User *user, char* name);
 void    set_user_email(User *user, char* email);
 void    set_user_password(User *user, char* password);
 void    set_user_age(User *user, int age);
-
-char**  alocar_matriz(int m, int n);
+void    set_user_id(User *user, int id);
 
 #endif
