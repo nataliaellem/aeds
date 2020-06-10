@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <strings.h>
+#include <time.h>
 #include "includes/user.h"
 #include "includes/login.h"
 #include "includes/logger.h"
+#include "includes/date.h"
 
 int main() {
   int k = 1, option;
@@ -51,7 +53,6 @@ int main() {
             printf("Opcao invalida, escolha novamente\n");
             break;
         }
-
       }
     }
   }

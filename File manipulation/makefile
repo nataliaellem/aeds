@@ -13,7 +13,8 @@ build:
 	$(CC) $(CFLAGS) -c lib/user.c -o user.out
 	$(CC) $(CFLAGS) -c lib/login.c -o login.out
 	$(CC) $(CFLAGS) -c lib/logger.c -o logger.out
-	$(CC) $(CFLAGS) main.c linked_list.out user.out login.out logger.out -o $(EXEC)
+	$(CC) $(CFLAGS) -c lib/date.c -o date.out
+	$(CC) $(CFLAGS) main.c linked_list.out user.out login.out logger.out date.out -o $(EXEC)
 
 clean:
-	rm -rf linked_list.out user.out login.out logger.out
+	rm -rf linked_list.out user.out login.out logger.out date.out

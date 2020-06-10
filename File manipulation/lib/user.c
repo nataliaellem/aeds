@@ -138,6 +138,8 @@ char** map_users(User *users, char* (*block)(User), int length){
   return mapping;
 }
 
+
+
 // Inspect
 void printf_email(User user){
   printf("%s\n", user.email);
