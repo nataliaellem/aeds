@@ -138,7 +138,51 @@ char** map_users(User *users, char* (*block)(User), int length){
   return mapping;
 }
 
+User *filter_char_attributes(User *users, char* (*block)(User), char *filter_attribute, int length){
+  User *filtered_users = (User*) malloc(length * sizeof(User));
+  for (int i = 0; i < length; i++){
+    char *attribute = (*block)(users[i]);
+    if (strcmp(attribute, filter_attribute) == 0){
+      char *name = get_user_name(users[i]);
+      char *email = get_user_email(users[i]);
+      char *password = get_user_password(users[i]);
+      int age = get_user_age(users[i]);
+      int id = get_user_id(users[i]);
+      set_user_name(&filtered_users[i], name);
+      set_user_email(&filtered_users[i], email);
+      set_user_password(&filtered_users[i], password);
+      set_user_age(&filtered_users[i], age);
+      set_user_id(&filtered_users[i], id);
+    }
+    else {
+      free(&filtered_users[i]);
+    }
+  }
+  return filtered_users;
+}
 
+User *filter_int_attributes(User *users, int (*block)(User), int filter_attribute, int length){
+  User *filtered_users = (User*) malloc(length * sizeof(User));
+  for (int i = 0; i < length; i++){
+    int attribute = (*block)(users[i]);
+    if (attribute == filter_attribute){
+      char *name = get_user_name(users[i]);
+      char *email = get_user_email(users[i]);
+      char *password = get_user_password(users[i]);
+      int age = get_user_age(users[i]);
+      int id = get_user_id(users[i]);
+      set_user_name(&filtered_users[i], name);
+      set_user_email(&filtered_users[i], email);
+      set_user_password(&filtered_users[i], password);
+      set_user_age(&filtered_users[i], age);
+      set_user_id(&filtered_users[i], id);
+    }
+    else {
+      free(&filtered_users[i]);
+    }
+  }
+  return filtered_users;
+}
 
 // Inspect
 void printf_email(User user){

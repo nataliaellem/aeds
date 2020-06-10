@@ -27,6 +27,8 @@ void new_user(User *user);
 void    each_user(User *users, void (*block)(User), int users_length);
 List*   map_list(User *users, char* (*block)(User), int length);
 char**  map_users(User *users, char* (*block)(User), int length);
+User    *filter_char_attributes(User *users, char* (*block)(User), char *filter_attribute, int length);
+User    *filter_int_attributes(User *users, int (*block)(User), int filter_attribute, int length);
 // Inspects
 void    printf_email(User user);
 void    printf_name(User user);
