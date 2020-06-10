@@ -61,6 +61,6 @@ int main() {
   // rewind(file);
   // fclose(file);
   // User *filtered_users = filter_int_attributes(users, get_user_age, 2, 9);
-  // each_user(filtered_users, printf_user_attributes, 2);
+  //each_user(filtered_users, printf_user_attributes, 2);
   return 0;
 }
