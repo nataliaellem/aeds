@@ -56,6 +56,11 @@ int main() {
       }
     }
   }
-  
+  FILE *file = fopen("storage/users.csv", "r");
+  User *users = list_users(file);
+  rewind(file);
+  fclose(file);
+  User *filtered_users = filter_int_attributes(users, get_user_age, 2, 9);
+  each_user(filtered_users, printf_user_attributes, 9);
   return 0;
 }
