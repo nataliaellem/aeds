@@ -154,9 +154,6 @@ User *filter_char_attributes(User *users, char* (*block)(User), char *filter_att
       set_user_age(&filtered_users[i], age);
       set_user_id(&filtered_users[i], id);
     }
-    else {
-      free(&filtered_users[i]);
-    }
   }
   return filtered_users;
 }
@@ -176,9 +173,6 @@ User *filter_int_attributes(User *users, int (*block)(User), int filter_attribut
       set_user_password(&filtered_users[i], password);
       set_user_age(&filtered_users[i], age);
       set_user_id(&filtered_users[i], id);
-    }
-    else {
-      free(&filtered_users[i]);
     }
   }
   return filtered_users;
