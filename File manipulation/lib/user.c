@@ -158,6 +158,7 @@ User *filter_char_attributes(User *users, char* (*block)(User), char *filter_att
       set_user_id(&filtered_users[count-2], id);
     }
   }
+  each_user(filtered_users, printf_user_attributes, count-1);
   return filtered_users;
 }
 
@@ -182,7 +183,7 @@ User *filter_int_attributes(User *users, int (*block)(User), int filter_attribut
       set_user_id(&filtered_users[count-2], id);
     }
   }
-
+  each_user(filtered_users, printf_user_attributes, count-1);
   return filtered_users;
 }
 
