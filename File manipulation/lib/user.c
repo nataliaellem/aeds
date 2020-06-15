@@ -71,12 +71,12 @@ void print_list_emails() {
 
 
 void create_user(){
-  printf("Digite o nome do usuario: ");
   char *name = (char*) malloc(50*sizeof(char));
   char *email = (char*) malloc(50*sizeof(char));
   char *pass = (char*) malloc(50*sizeof(char));
   int age;
   int id;
+  printf("Digite o nome do usuario: ");
   scanf("%s", name);
   printf("\n");
   printf("Digite o email: ");
@@ -106,12 +106,13 @@ void update_user(User *authenticated_user){
   int n = 1;
   while (n){
     printf("Qual informacao voce deseja atualizar? \n");
-    printf("ESCOLHA UMA OPCAO:\n");
     printf("\t(1): Nome de usuario\n");
     printf("\t(2): Email\n");
     printf("\t(3): Senha\n");
     printf("\t(4): Idade\n");
+    printf("ESCOLHA UMA OPCAO:");
     scanf("%d", &option);
+    printf("\n");
     switch (option){
       case 1:
         change_user_name(authenticated_user);
@@ -138,11 +139,11 @@ void update_user(User *authenticated_user){
 
 void change_user_name(User *authenticated_user){
   //fflush(stdin);
-  char new_name[100];
-  printf("Digite o novo nome de usuario: \n");
-  scanf("%s", new_name);
   //scanf("%[^\n]", new_name);
   //fgets(new_name, 100, stdin);
+  char *new_name = (char*) malloc(100 * sizeof(char));
+  printf("Digite o novo nome de usuario: ");
+  scanf("%s", new_name);
   printf("\n");
   int count_file_lines = 0;
   FILE *file = fopen("storage/users.csv", "r");
@@ -153,7 +154,6 @@ void change_user_name(User *authenticated_user){
   }
   rewind(file);
   User *users = list_users(file);
-  printf("\n");
   rewind(file);
   fclose(file);
   char *authenticated_name = get_user_name(*authenticated_user);
@@ -166,14 +166,6 @@ void change_user_name(User *authenticated_user){
     }
   }
   set_user_name(&users[j], new_name);
-  for (int k = 0; k < count_file_lines; k++){
-    printf("%s,", users[k].name);
-    printf("%s,", users[k].email);
-    printf("%s,", users[k].password);
-    printf("%d,", users[k].age);
-    printf("\n");
-  }
-
   printf("\n");
   file = fopen("storage/users.csv", "w");
   for (int n = 0; n < count_file_lines; n++){
@@ -188,16 +180,126 @@ void change_user_name(User *authenticated_user){
   fclose(file);
 }
 
+
 void change_email(User *authenticated_user){
-  return;
+  char *new_email = (char*) malloc(100 * sizeof(char));
+  printf("Digite o novo email de usuario: ");
+  scanf("%s", new_email);
+  printf("\n");
+  int count_file_lines = 0;
+  FILE *file = fopen("storage/users.csv", "r");
+  for (char c = getc(file); c != EOF; c = getc(file)){
+    if (c == '\n'){
+      count_file_lines ++;
+    }
+  }
+  rewind(file);
+  User *users = list_users(file);
+  rewind(file);
+  fclose(file);
+  char *authenticated_email = get_user_email(*authenticated_user);
+  int j;
+  for (int i = 0; i < count_file_lines; i++){
+    char *user_email = get_user_email(users[i]);
+    if (strcmp(authenticated_email, user_email) == 0){
+      j = i;
+      i = count_file_lines;
+    }
+  }
+  set_user_email(&users[j], new_email);
+  printf("\n");
+  file = fopen("storage/users.csv", "w");
+  for (int n = 0; n < count_file_lines; n++){
+    fprintf(file, "%s,", users[n].name);
+    fprintf(file, "%s,", users[n].email);
+    fprintf(file, "%s,", users[n].password);
+    fprintf(file, "%d,", users[n].age);
+    fprintf(file, "%d,", users[n].id);
+    fprintf(file, "\n");
+  }
+  rewind(file);
+  fclose(file);
 }
 
+
 void change_password(User *authenticated_user){
-  return;
+  char *new_password = (char*) malloc(100 * sizeof(char));
+  printf("Digite a nova senha do usuario: ");
+  scanf("%s", new_password);
+  printf("\n");
+  int count_file_lines = 0;
+  FILE *file = fopen("storage/users.csv", "r");
+  for (char c = getc(file); c != EOF; c = getc(file)){
+    if (c == '\n'){
+      count_file_lines ++;
+    }
+  }
+  rewind(file);
+  User *users = list_users(file);
+  rewind(file);
+  fclose(file);
+  char *authenticated_password = get_user_password(*authenticated_user);
+  int j;
+  for (int i = 0; i < count_file_lines; i++){
+    char *user_password = get_user_password(users[i]);
+    if (strcmp(authenticated_password, user_password) == 0){
+      j = i;
+      i = count_file_lines;
+    }
+  }
+  set_user_password(&users[j], new_password);
+  printf("\n");
+  file = fopen("storage/users.csv", "w");
+  for (int n = 0; n < count_file_lines; n++){
+    fprintf(file, "%s,", users[n].name);
+    fprintf(file, "%s,", users[n].email);
+    fprintf(file, "%s,", users[n].password);
+    fprintf(file, "%d,", users[n].age);
+    fprintf(file, "%d,", users[n].id);
+    fprintf(file, "\n");
+  }
+  rewind(file);
+  fclose(file);
 }
 
 void change_age(User *authenticated_user){
-  return;
+  int new_age;
+  printf("Digite a nova idade do usuario: ");
+  scanf("%d", &new_age);
+  printf("\n");
+  int count_file_lines = 0;
+  FILE *file = fopen("storage/users.csv", "r");
+  for (char c = getc(file); c != EOF; c = getc(file)){
+    if (c == '\n'){
+      count_file_lines ++;
+    }
+  }
+  rewind(file);
+  User *users = list_users(file);
+  rewind(file);
+  fclose(file);
+  int authenticated_age = get_user_age(*authenticated_user);
+  int j;
+  for (int i = 0; i < count_file_lines; i++){
+    int user_age = get_user_age(users[i]);
+    if (authenticated_age == user_age){
+      j = i;
+      i = count_file_lines;
+    }
+  }
+  set_user_age(&users[j], new_age);
+  printf("\n");
+  file = fopen("storage/users.csv", "w");
+  for (int n = 0; n < count_file_lines; n++){
+    fprintf(file, "%s,", users[n].name);
+    fprintf(file, "%s,", users[n].email);
+    fprintf(file, "%s,", users[n].password);
+    fprintf(file, "%d,", users[n].age);
+    fprintf(file, "%d,", users[n].id);
+    fprintf(file, "\n");
+  }
+  rewind(file);
+  fclose(file);
 }
 
 
