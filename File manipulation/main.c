@@ -8,7 +8,7 @@
 #include "includes/date.h"
 
 int main() {
-  int k = 1, option;
+  int k = 1;
   system("clear");
   printf("BEM VINDO!\n\n");
   while (k) {
@@ -16,13 +16,15 @@ int main() {
     if (authenticated_user){
       int l = 1;
       while (l){
+        int option;
         printf("ESCOLHA UMA OPCAO:\n");
         printf("\t(1): Listar usuarios do sistema\n");
         printf("\t(2): Listar apenas emails\n");
         printf("\t(3): Criar novo usuario\n");
         printf("\t(4): Ler a tabela de log\n");
-        printf("\t(5): Fazer logout\n");
-        printf("\t(6): Sair do sistema\n");
+        printf("\t(5): Atualizar dados do usuario\n");
+        printf("\t(6): Fazer logout\n");
+        printf("\t(7): Sair do sistema\n");
         printf("Digite e pressione enter: ");
         scanf("%d", &option);
         logger(option, authenticated_user);
@@ -41,9 +43,12 @@ int main() {
             read_log_table();
             break;
           case 5:
-            l=0;
+            update_user(authenticated_user);
             break;
           case 6:
+            l=0;
+            break;
+          case 7:
             l=0;
             k=0;
             break;
@@ -58,15 +63,15 @@ int main() {
   }
 
   //test for list logs
-  FILE *file = fopen("storage/production.log", "r");
+  //FILE *file = fopen("storage/production.log", "r");
   //list_logs(file);
   //test for filter functions
-  char ***logs = list_logs(file);
-  filter_logs_id(logs, get_id_log, 10);
+  //char ***logs = list_logs(file);
+  //filter_logs_id(logs, get_id_log, 10);
   // FILE *file = fopen("storage/users.csv", "r");
   // User *users = list_users(file);
-  rewind(file);
-  fclose(file);
+  //rewind(file);
+  //fclose(file);
   // filter_int_attributes(users, get_user_age, 2, 9);
   return 0;
 }

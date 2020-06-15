@@ -19,6 +19,11 @@ User* list_users(FILE *file);
 void print_list_users();
 void print_list_emails();
 void create_user();
+void update_user(User *authenticated_user);
+void change_user_name(User *authenticated_user);
+void change_email(User *authenticated_user);
+void change_password(User *authenticated_user);
+void change_age(User *authenticated_user);
 
 // Initializer
 void new_user(User *user);
