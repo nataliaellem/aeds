@@ -23,9 +23,15 @@ void logger(int option, User *authenticated_user){
       fprintf(file, "%d,leu a tabela de logs,%d/%d/%d,%d:%d:%d,\n", id, day, month, year, hour, minutes, seconds);
       break;
     case 5:
+      fprintf(file, "%d,atualizou dados do usuario,%d/%d/%d,%d:%d:%d,\n", id, day, month, year, hour, minutes, seconds);
+      break;
+    case 6:
+      fprintf(file, "%d,leu logs de um usuario,%d/%d/%d,%d:%d:%d,\n", id, day, month, year, hour, minutes, seconds);
+      break;
+    case 7:
       fprintf(file, "%d,fez logout,%d/%d/%d,%d:%d:%d,\n", id, day, month, year, hour, minutes, seconds);
       break;
-    default:
+    case 8:
       fprintf(file, "%d,saiu do sistema,%d/%d/%d,%d:%d:%d,\n", id, day, month, year, hour, minutes, seconds);
   }
 
@@ -54,21 +60,22 @@ int read_log_table(){
 
 
 char*** list_logs(FILE *file) {
-    int count_file_lines = 0;
     if (file == NULL) {
       printf("Arquivo não pode ser aberto\n");
       return 0;
     }
-
-    for (char c = getc(file); c != EOF; c = getc(file))
-      if (c == '\n')
+    int count_file_lines = 0;
+    for (char c = getc(file); c != EOF; c = getc(file)){
+      if (c == '\n'){
         count_file_lines ++;
+      }
+    }
     char ***logs = (char***) malloc(count_file_lines * sizeof(char**));
-    for (int j =0; j < count_file_lines; j++){
+    for (int j = 0; j < count_file_lines; j++){
       logs[j] = (char**) malloc(4 * sizeof(char*));
       for (int k = 0; k < 4; k++){
-        logs[j][k] = (char*) malloc(50 * sizeof(char));
-      }
+          logs[j][k] = (char*) malloc(50 * sizeof(char));
+        }
     }
     int i = 0;
     rewind(file);
@@ -87,7 +94,6 @@ char*** list_logs(FILE *file) {
     //   }
     //   printf("\n");
     // }
-    //printf("LOGs NA POSICAO 00: %s\n", logs[0][0]);
     return logs;
 }
 
@@ -154,4 +160,20 @@ char*** filter_logs_id(char ***logs, int(*block)(char**), int filter_attribute){
     printf("\n");
   }
   return filtered_logs;
+}
+
+void user_logs(int count_file_lines, FILE *file){
+  FILE *production = fopen("storage/production.log", "r");
+  char ***logs = list_logs(production);
+  User *users = list_users(file);
+  int id;
+  printf("De qual usuario voce deseja ver os logs?\n");
+  for (int i = 0; i < count_file_lines; i++){
+    printf("\t(%d) %s \n", i, users[i].name);
+  }
+  printf("Digite o numero correspondente: ");
+  scanf("%d", &id);
+  printf("\n");
+  filter_logs_id(logs, get_id_log, id);
+  printf("\n");
 }
