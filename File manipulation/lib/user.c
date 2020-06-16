@@ -138,13 +138,10 @@ void update_user(User *authenticated_user){
 }
 
 void change_user_name(User *authenticated_user){
-  //fflush(stdin);
-  //scanf("%[^\n]", new_name);
-  //fgets(new_name, 100, stdin);
   char *new_name = (char*) malloc(100 * sizeof(char));
   printf("Digite o novo nome de usuario: ");
-  scanf("%s", new_name);
-  printf("\n");
+  __fpurge(stdin);
+  scanf("%[^\n]", new_name);
   int count_file_lines = 0;
   FILE *file = fopen("storage/users.csv", "r");
   for (char c = getc(file); c != EOF; c = getc(file)){
