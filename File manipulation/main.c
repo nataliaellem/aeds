@@ -20,7 +20,7 @@ int main() {
         printf("ESCOLHA UMA OPCAO:\n");
         printf("\t(1): Listar usuarios do sistema\n");
         printf("\t(2): Listar apenas emails\n");
-        printf("\t(3): Criar novo usuario\n");
+        printf("\t(3): Criar novo usuario (apenas para adms)\n");
         printf("\t(4): Ler a tabela de log\n");
         printf("\t(5): Atualizar dados do usuario\n");
         printf("\t(6): Fazer logout\n");
@@ -37,7 +37,7 @@ int main() {
             print_list_emails();
             break;
           case 3:
-            create_user();
+            create_user(authenticated_user);
             break;
           case 4:
             read_log_table();

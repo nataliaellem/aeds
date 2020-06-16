@@ -1,5 +1,7 @@
-Alan Borges,alan@gmail.com,123,22,0,
-Natalia,natalia@gmail.com,123,20,1,
-Joana,joana@gmail.com,123,2,2,
-Pedro,pedro@gmail.com,123,2,3,
-Administrador,adm@gmail.com,12345,20,4
+Adm,adm@gmail.com,12345,20,0,adm,
+Alan Borges,alan@gmail.com,123,22,1,regular,
+Natalia Ellem,natalia@gmail.com,123,20,2,regular,
+Joana,joana@gmail.com,123,2,3,regular,
+Pedro,pedro@gmail.com,123,2,4,regular,
+Debora,debora@gmail.com,123,39,5,adm,
+Alves Moreira,alves@gmail.com,123,49,6,regular,

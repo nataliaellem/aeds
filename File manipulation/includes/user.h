@@ -13,17 +13,18 @@ typedef struct user {
   char *password;
   int age;
   int id;
+  char *role;
 } User;
 
 User* list_users(FILE *file);
 void print_list_users();
 void print_list_emails();
-void create_user();
+void create_user(User *authenticated_user);
 void update_user(User *authenticated_user);
-void change_user_name(User *authenticated_user);
-void change_email(User *authenticated_user);
-void change_password(User *authenticated_user);
-void change_age(User *authenticated_user);
+void change_user_name(User *authenticated_user, int count_file_lines, User *users);
+void change_email(User *authenticated_user, int count_file_lines, User *users);
+void change_password(User *authenticated_user, int count_file_lines, User *users);
+void change_age(User *authenticated_user, int count_file_lines, User *users);
 
 // Initializer
 void new_user(User *user);
@@ -46,11 +47,13 @@ char*   get_user_email(User user);
 char*   get_user_password(User user);
 int     get_user_age(User user);
 int     get_user_id(User user);
+char*   get_user_role(User user);
 // Setters
 void    set_user_name(User *user, char* name);
 void    set_user_email(User *user, char* email);
 void    set_user_password(User *user, char* password);
 void    set_user_age(User *user, int age);
 void    set_user_id(User *user, int id);
+void    set_user_role(User *user, char* role);
 
 #endif
