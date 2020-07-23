@@ -9,8 +9,8 @@ List* insert(List *list, char* data){
 		List *new_block = (List*) malloc(sizeof(List));
     new_block->data = (char*) malloc(50 * sizeof(char));
 		strcpy(new_block->data, data);
-		new_block->prev = (List*) NULL; //o ponteiro do novo bloco esta apontando para o NULL que estava
-		new_block->next = (List*) NULL; //na lista
+		new_block->prev = (List*) NULL;
+		new_block->next = (List*) NULL;
 		list = new_block;
 	} else {
 		List *aux;
