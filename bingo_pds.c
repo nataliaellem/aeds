@@ -85,14 +85,13 @@ Jogador* sortear_numero(Jogador *jogadores, int numero_jogadores, int tamanho_ca
 // Função que imprime todas as cartelas de todos os jogadores
 void exibir_cartelas(Jogador *jogadores, int numero_jogadores, int tamanho_cartela) {
     for (int i = 0; i < numero_jogadores; i++) {
-        printf("Jogador %d:\n\n", i+1);
+        printf("Cartela do jogador %d:\n", i+1);
         for (int j = 0; j < tamanho_cartela; j++) {
             for (int k = 0; k < tamanho_cartela; k++) {
                 printf("%d\t", jogadores[i].cartela[j][k]);
             }
             printf("\n");
         }
-        printf("\n\n");
     }
 }
 // ______________________________________//_______________________________________________//
@@ -129,20 +128,22 @@ void relatorio_final(Jogador *jogadores, int numero_jogadores, int tamanho_carte
 
 // ______________________________________//_______________________________________________//
 void menu(){
-    printf("\n\t\tMENU\n");
+    //printf("\n\t\tMENU\n");
     srand(123);
 
     // Escaneando o número de jogadores e a dimensão da cartela
     int numero_jogadores = 0, tamanho_cartela = 0;
     while (numero_jogadores < 2 || numero_jogadores > 10){
-        printf("\nInforme o número de jogadores: ");
+        //printf("\nInforme o número de jogadores: ");
         scanf("%d", &numero_jogadores);
     }
+    printf("\n");
     while (tamanho_cartela < 2 || tamanho_cartela > 9){
-        printf("\nInforme o tamanho da cartela: ");
+        //printf("\nInforme o tamanho da cartela: ");
         scanf("%d", &tamanho_cartela);
     }
-    printf("\n");
+    printf("\nJogadores: %d\n", numero_jogadores);
+    printf("Tamanho da cartela: %d\n", tamanho_cartela);
 
     // Criando um vetor com os jogadores
     Jogador *jogadores = new_vetor_jogadores(numero_jogadores, tamanho_cartela);
@@ -162,8 +163,8 @@ void menu(){
     // O loop tem um switch case com as opções que o usuário pode escolher
     while (k){
         int valor;
-        printf("\t\tMENU\n\n");
-        printf("Digite uma opção:\n\t(1) sortear um novo número\n\t(2) Exibir as cartelas\n\t(3) Exibir a situação atual do jogo\n\t(0) sair do jogo e exibir relatório final\n");
+        //printf("\t\tMENU\n\n");
+        //printf("Digite uma opção:\n\t(1) sortear um novo número\n\t(2) Exibir as cartelas\n\t(3) Exibir a situação atual do jogo\n\t(0) sair do jogo e exibir relatório final\n");
         scanf("%d", &valor);
         switch (valor){
             case 1:
