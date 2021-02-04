@@ -1,6 +1,3 @@
-// Nome: Natália Ellem Moreira
-// Turma: TM3
-
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -20,6 +17,11 @@ Jogador* new_vetor_jogadores(int numero_jogadores, int tamanho_cartela) {
     // Alocando memória para o vetor de jogadores
     Jogador *jogadores = (Jogador*) malloc(numero_jogadores * sizeof(Jogador));
     for (int i = 0; i < numero_jogadores; i++) {
+        int quantidade_numeros = tamanho_cartela * tamanho_cartela;
+        // vetor que guarda os números já presentes na cartela
+        int *vetor_auxiliar = (int *) malloc((quantidade_numeros) * sizeof(int));
+        int posicao_vet_auxiliar = 0;
+        
         jogadores[i].id = i+1;
         jogadores[i].pontos = 0;
         // Alocando memória para a matriz cartela que é um atributo da
@@ -29,7 +31,19 @@ Jogador* new_vetor_jogadores(int numero_jogadores, int tamanho_cartela) {
             jogadores[i].cartela[j] = (int *) malloc(tamanho_cartela * sizeof(int));
             // Colocando números aleatórios nas cartelas
             for (int k = 0; k < tamanho_cartela; k++) {
-                jogadores[i].cartela[j][k] = 1 + rand() % (10 * tamanho_cartela);
+                int aux = 1;
+                while (aux) {
+                    jogadores[i].cartela[j][k] = 1 + rand() % (10 * tamanho_cartela);
+                    for (int l = 0; l < quantidade_numeros; l++) {
+                        if (jogadores[i].cartela[j][k] == vetor_auxiliar[l]) {
+                            break;
+                        } else if (jogadores[i].cartela[j][k] != vetor_auxiliar[l] && l == quantidade_numeros - 1) {
+                            vetor_auxiliar[posicao_vet_auxiliar] = jogadores[i].cartela[j][k];
+                            posicao_vet_auxiliar++;
+                            aux = 0;
+                        }
+                    }
+                }
                 
             }
         }
@@ -132,14 +146,18 @@ void menu(){
     srand(123);
 
     // Escaneando o número de jogadores e a dimensão da cartela
-    int numero_jogadores = 0, tamanho_cartela = 0;
+    int numero_jogadores, tamanho_cartela;
+    //printf("\nInforme o número de jogadores: ");
+    scanf("%d", &numero_jogadores);
     while (numero_jogadores < 2 || numero_jogadores > 10){
-        //printf("\nInforme o número de jogadores: ");
+        printf("\n");
         scanf("%d", &numero_jogadores);
     }
     printf("\n");
+    scanf("%d", &tamanho_cartela);
     while (tamanho_cartela < 2 || tamanho_cartela > 9){
         //printf("\nInforme o tamanho da cartela: ");
+        printf("\n");
         scanf("%d", &tamanho_cartela);
     }
     printf("\nJogadores: %d\n", numero_jogadores);
@@ -161,16 +179,18 @@ void menu(){
 
     // Loop while que vai rodar até o usuário digitar 0
     // O loop tem um switch case com as opções que o usuário pode escolher
-    while (k){
+    while (k != 0){
         int valor;
         //printf("\t\tMENU\n\n");
         //printf("Digite uma opção:\n\t(1) sortear um novo número\n\t(2) Exibir as cartelas\n\t(3) Exibir a situação atual do jogo\n\t(0) sair do jogo e exibir relatório final\n");
         scanf("%d", &valor);
         switch (valor){
             case 1:
-                // Caso alguém já tenha feito bingo o programa sai desse case 
-                if (bingo == 0) {
-                    jogadores = sortear_numero(jogadores, numero_jogadores, tamanho_cartela, numeros_sorteados, &bingo);
+                jogadores = sortear_numero(jogadores, numero_jogadores, tamanho_cartela, numeros_sorteados, &bingo);
+                // Caso alguém já tenha feito bingo o programa encerra e mostra o relatório final 
+                if (bingo == 1) {
+                    relatorio_final(jogadores, numero_jogadores, tamanho_cartela, numeros_sorteados);
+                    return;
                 }
                 break;
             case 2:
