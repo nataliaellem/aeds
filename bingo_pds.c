@@ -1,3 +1,5 @@
+// Nome: Natália Ellem Moreira
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -33,7 +35,7 @@ Jogador* new_vetor_jogadores(int numero_jogadores, int tamanho_cartela) {
             for (int k = 0; k < tamanho_cartela; k++) {
                 int aux = 1;
                 while (aux) {
-                    jogadores[i].cartela[j][k] = 1 + rand() % (10 * tamanho_cartela);
+                    jogadores[i].cartela[j][k] = rand() % (10 * tamanho_cartela + 1);
                     for (int l = 0; l < quantidade_numeros; l++) {
                         if (jogadores[i].cartela[j][k] == vetor_auxiliar[l]) {
                             break;
@@ -51,28 +53,34 @@ Jogador* new_vetor_jogadores(int numero_jogadores, int tamanho_cartela) {
     return jogadores;
 }
 
+
 // ______________________________________//_______________________________________________//
+
 
 // Função que sorteia um número e coloca os pontos para os jogadores
 Jogador* sortear_numero(Jogador *jogadores, int numero_jogadores, int tamanho_cartela, int *numeros_sorteados, int *bingo) {
     // Definindo o número a ser sorteado x
     int x;
+
     // Sorteando x aleatoriamente com a função rand
-    x = 1 + rand() % (10 * tamanho_cartela);
-
-
-    // Como o vetor de números sorteados foi alocado com a função calloc,
-    // então todas as posições recebem o valor zero inicialmente
-    // Desse modo, vou verificar qual a próxima posição que ainda não foi 
-    // substituída por um número sorteado e colocar nessa posição o número sorteado x
-    int aux = 0;
-    while (numeros_sorteados[aux] != 0) {
-        aux++;
-    }
-    // Imprimindo o número aleatório sorteado
-    printf("%d° numero sorteado: %d\n", aux+1, x);
+    x = rand() % (10 * tamanho_cartela + 1);
     
-    numeros_sorteados[aux] = x;
+    // verificando se x já foi sorteado antes
+    while (x == numeros_sorteados[x - 1]) {
+        x = rand() % (10 * tamanho_cartela + 1);   
+    }
+    numeros_sorteados[x-1] = x;
+    
+    // Contando quantos numeros foram sorteados
+    int n = 0;
+    for (int i = 0; i < 100; i++) {
+        if (numeros_sorteados[i] != 0) 
+        n++;
+    }
+
+    // Imprimindo o número aleatório sorteado
+    printf("%do numero sorteado: %d\n", n, x);
+    
 
     // Marcando o número sorteado nas cartelas
     // se o número sorteado estiver na cartela,
@@ -113,8 +121,10 @@ void exibir_cartelas(Jogador *jogadores, int numero_jogadores, int tamanho_carte
 void situacao_atual_jogo(Jogador *jogadores, int numero_jogadores, int *numeros_sorteados) {
     // Imprimindo números sorteados
     printf("Numeros sorteados:\n");
-    for (int i = 0; numeros_sorteados[i] != 0; i++) {
-        printf("%d, ", numeros_sorteados[i]);    
+    for (int i = 0; i < 100; i++) {
+        if (numeros_sorteados[i] != 0) {
+            printf("%d, ", numeros_sorteados[i]);    
+        }
     }
     // Imprimindo pontos por jogador
     printf("\nPontos por jogador:\n");
@@ -124,17 +134,18 @@ void situacao_atual_jogo(Jogador *jogadores, int numero_jogadores, int *numeros_
 }
 // ______________________________________//_______________________________________________//
 void relatorio_final(Jogador *jogadores, int numero_jogadores, int tamanho_cartela, int *numeros_sorteados) {
-    printf("\nRelatorio final\n");
+    printf("Relatorio final\n");
 
     printf("Numeros sorteados:\n");
-    for (int i = 0; numeros_sorteados[i] != 0; i++) {
+    for (int i = 0; i < 100; i++) {
+        if (numeros_sorteados[i] != 0)
         printf("%d, ", numeros_sorteados[i]);    
     }
     printf("\n");
     // Chamando função que imprime as cartelas de cada jogador
     exibir_cartelas(jogadores, numero_jogadores, tamanho_cartela);
 
-    printf("\nPontos por jogador:\n");
+    printf("Pontos por jogador:\n");
     for (int j = 0; j < numero_jogadores; j++) {
         printf("Jogador %d: %d\n", jogadores[j].id, jogadores[j].pontos);
     }
@@ -166,7 +177,7 @@ void menu(){
     // Criando um vetor com os jogadores
     Jogador *jogadores = new_vetor_jogadores(numero_jogadores, tamanho_cartela);
 
-    // Podem ser sorteados no máximo 99 números
+    // Podem ser sorteados no máximo 100 números
     int *numeros_sorteados = (int *) calloc(100, sizeof(int));
     
     int k = 1;
