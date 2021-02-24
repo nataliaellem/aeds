@@ -1,14 +1,8 @@
-#include "lista.h"
+#include "lista_encadeada.h"
 
 Lista* cria_lista(){
     Lista *lista = NULL;
     return lista;
-}
-
-Fila* cria_fila(){
-    Fila *fila = (Fila*) malloc(sizeof(Fila));
-    fila->ini = fila->fim = NULL;
-    return fila;
 }
 
 // Função que insere um elemento e retorna a lista encadeada
@@ -31,15 +25,14 @@ Lista* insere_lista(Lista *lista, float valor){
 
 // Funções recursivas do exercício 1
 
-void imprime_lista_recursiva(Lista *lista){
+Lista* imprime_lista_recursiva(Lista *lista, Lista *inicio_lista){
     if (lista == NULL){
         printf("\n");
-        exit(1);
+        return inicio_lista;
     }
     printf("%.2f -> ", lista->info);
-    Lista *aux = lista;
-    return imprime_lista_recursiva(aux->prox);
-
+    imprime_lista_recursiva(lista->prox, inicio_lista);
+    return inicio_lista;
 }
 
 void retira_aux(Lista *lista, float valor, Lista *ant){
@@ -72,7 +65,7 @@ retira_aux(lista, valor, NULL);
 
 void lista_libera_recursiva(Lista *lista){
     if (lista == NULL){
-        exit(1);
+        return;
     }
     Lista *aux = lista->prox;
     free(lista);
@@ -84,20 +77,20 @@ void lista_libera_recursiva(Lista *lista){
 // Exercício 2 
 
 Lista* lista_intercala(Lista *l1, Lista *l2){
-    Lista *lista_intercala = (Lista*) malloc(sizeof(Lista));
-    Lista *aux1 = l1, *aux2 = l2, *aux3 = lista_intercala;
-    while(aux1 != NULL || aux2 != NULL){
-        if (aux1->info == aux2->info){
-            aux3->info = aux1->info;
-            aux3 = aux3->prox;
-            aux3->prox = (Lista*) malloc(sizeof(Lista));
+    Lista *intercalacao = cria_lista();
+    Lista *aux1, *aux2;
+    for(aux1 = l1; aux1 != NULL; aux1 = aux1->prox){
+        for (aux2 = l2; aux2 != NULL; aux2 = aux2->prox){
+            if (aux1->info == aux2->info){
+                intercalacao = insere_lista(intercalacao, aux1->info);
+            }
         }
-        aux1 = aux1->prox;
-        aux2 = aux2->prox;
+        aux2 = l2;
+
     }
-    return lista_intercala;
+    return intercalacao;
 }
 
 /////////////////////////////////////////////////////////////
 
-// Exercício 3
+

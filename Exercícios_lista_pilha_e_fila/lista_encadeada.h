@@ -9,19 +9,13 @@ typedef struct lista {
     struct lista *ant;
 } Lista;
 
-typedef struct fila{
-    Lista *ini;
-    Lista *fim;
-} Fila;
-
 
 Lista* cria_lista();
 
-Fila* cria_fila();
 
 Lista* insere_lista(Lista *lista, float valor);
 
-void imprime_lista_recursiva(Lista *lista);
+Lista* imprime_lista_recursiva(Lista *lista, Lista *inicio_lista);
 
 void lista_retira_recursiva(Lista *lista, float valor);
 
