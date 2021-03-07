@@ -17,7 +17,7 @@ typedef struct arvore{
     No *raiz;
 } Arvore;
 
-
+// Estrutura que será usada para criar um vetor que irá armazenar o caracter e o número de ocorrências deste
 typedef struct histograma{
     char caracter;
     int ocorrencias;
@@ -34,7 +34,7 @@ No* cria_no(char info);
 
 int arvore_vazia(Arvore arvore);
 
-int no_vazia(No *no);
+int no_vazio(No *no);
 
 void imprime_pre_ordem(No *raiz);
 

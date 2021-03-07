@@ -7,7 +7,7 @@ Arvore cria_arvore_vazia(){
     return arvore;
 }
 
-// Criando uma árvore não vazia com duas nos
+// Criando uma árvore não vazia com dois nos
 Arvore cria_arvore(char info, No *sae, No *sad){
     Arvore arvore;
     arvore.raiz = (No*) malloc(sizeof(No));
@@ -17,7 +17,6 @@ Arvore cria_arvore(char info, No *sae, No *sad){
     return arvore;
 }
 
-// Função para ser usada com as funções de inserção in order, pos ordem e pre ordem 
 Arvore cria_arvore_com_raiz(char info){
     Arvore arvore;
     arvore.raiz = (No*) malloc(sizeof(No));
@@ -41,7 +40,7 @@ int arvore_vazia(Arvore arvore){
     // se vazia retorna 1, se não retorna 0
 }
 
-int no_vazia(No *no){
+int no_vazio(No *no){
     return no == NULL;
 }
 
@@ -50,7 +49,7 @@ int no_vazia(No *no){
 
 // Pré-ordem imprime 
 void imprime_pre_ordem(No *raiz){
-    if (no_vazia(raiz) != 1){
+    if (no_vazio(raiz) != 1){
         printf("%c  ", raiz->info);
         imprime_pre_ordem(raiz->esq);
         imprime_pre_ordem(raiz->dir);
@@ -60,7 +59,7 @@ void imprime_pre_ordem(No *raiz){
 
 // Ordem simétrica imprime
 void imprime_in_order(No *raiz){
-    if (no_vazia(raiz) != 1){
+    if (no_vazio(raiz) != 1){
         imprime_pre_ordem(raiz->esq);
         printf("%c  ", raiz->info);
         imprime_pre_ordem(raiz->dir);
@@ -70,7 +69,7 @@ void imprime_in_order(No *raiz){
 
 // Pós-ordem imprime
 void imprime_pos_ordem(No *raiz){
-    if (no_vazia(raiz) != 1){
+    if (no_vazio(raiz) != 1){
         imprime_pre_ordem(raiz->esq);
         imprime_pre_ordem(raiz->dir);
         printf("%c  ", raiz->info);
@@ -82,6 +81,7 @@ void imprime_pos_ordem(No *raiz){
 
 No *arvore_insere(No *raiz, char info){
     if (raiz == NULL){
+        // Chama a função que cria um nó e insere a informação
         raiz = cria_no(info);
     } 
     else if (info < raiz->info){
@@ -150,27 +150,52 @@ int conta_nos_dois_filhos(No *no){
 
 
 
-/////////////// Exercício 4/////////////////
+/////////////// Exercício 4 /////////////////
+
+// Função que é chamada na main em que o usuário passa como argumento somenete a raiz da árvore
 
 Histograma* ocorrencia_caracteres(No *raiz){
-  int tam_arvore = conta_nos(raiz);
-  Histograma *histograma = (Histograma*) malloc(tam_arvore * sizeof(Histograma));
-  for (int i = 0; i < tam_arvore; i++){
-    histograma[i].ocorrencias = 0;
-  }
-  conta_caracteres(raiz, histograma, tam_arvore);
-  return histograma;
+    int tam_arvore = conta_nos(raiz);
+
+    // tam_arvore é o tamanho máximo que o vetor histograma pode ter
+    Histograma *histograma = (Histograma*) malloc(tam_arvore * sizeof(Histograma));
+
+    for (int i = 0; i < tam_arvore; i++){
+        histograma[i].ocorrencias = 0;
+    }
+    conta_caracteres(raiz, histograma, tam_arvore);
+
+    return histograma;
 }
 
+// Função auxiliar que precisa de mais argumentos (pois é recursiva) e que não será chamada na main,
+// será chamada pela função anterior, para que o código fique mais limpo na main
 
 void conta_caracteres(No *no, Histograma *hist, int tam_hist){
     if (no == NULL){
       return;
     }
+
+    // Percorrendo o vetor histograma para verificar se a informação do nó já está no histograma
+
     for (int i = 0; i < tam_hist; i++){
-      if (no->info == hist[i].caracter){
-          hist[i].ocorrencias++;
-      }
+        // Se o caracter do nó já tiver no histograma, vou só incrementar no número de ocorrências e sair do for
+        if (no->info == hist[i].caracter){
+            hist[i].ocorrencias++;
+            break;
+        // Se eu tiver na última posição do vetor histograma e no->info não estiver lá, significa que esse caracter não
+        // foi colocado ainda no vetor, e então será colocado na próxima posição vazia
+        } else if (i == tam_hist-1 && no->info != hist[i].caracter){
+            // Esse for irá encontrar a próxima posição vazia do vetor, ou seja, a posição onde o atributo ocorrencias
+            // tem valor zero
+            for (int j = 0; j < tam_hist; j++){
+                if (hist[j].ocorrencias == 0){
+                    hist[j].caracter = no->info;
+                    hist[j].ocorrencias = 1;
+                    break;
+                }
+            }
+        }
     }
     conta_caracteres(no->esq, hist, tam_hist);
     conta_caracteres(no->dir, hist, tam_hist);
