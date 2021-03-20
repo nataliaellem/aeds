@@ -30,12 +30,18 @@ No* novo_no(char dado);
 
 void imprime_arvore_infixa(No *raiz);
 
+void imprime_arvore_infixa_arquivo(No *raiz, FILE *file);
+
 void imprime_arvore_posordem(No *raiz);
+
+void imprime_arvore_posordem_arquivo(No *raiz, FILE *file);
 
 int max2(int a,int b);
 
 int arvore_altura(No *raiz);
 
 void imprime_arvore(No *r);
+
+void imprime_arvore_arquivo(FILE *file, No *r);
 
 #endif

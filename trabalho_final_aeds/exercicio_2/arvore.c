@@ -1,11 +1,11 @@
 #include "arvore.h"
 #include "fila.h"
 
-
 Arvore* cria_arvore(){
-    return NULL;
+	Arvore* arvore = (Arvore*) malloc(sizeof(Arvore));
+    arvore->raiz = (No*) NULL;
+    return arvore;
 }
-
 
 int arvore_vazia(Arvore *arvore){
     return (arvore == NULL);
@@ -26,17 +26,32 @@ No* novo_no(char dado){
 void imprime_arvore_infixa(No *raiz){
     if (!no_vazio(raiz)){
         imprime_arvore_infixa(raiz->esq);
-        printf("%c\t", raiz->info);
+        printf("%c", raiz->info);
         imprime_arvore_infixa(raiz->dir);
     }
 }
 
+void imprime_arvore_infixa_arquivo(No *raiz, FILE *file){
+    if (!no_vazio(raiz)){
+        imprime_arvore_infixa_arquivo(raiz->esq, file);
+        fprintf(file, "%c", raiz->info);
+        imprime_arvore_infixa_arquivo(raiz->dir, file);
+    }
+}
 
 void imprime_arvore_posordem(No *raiz){
     if (!no_vazio(raiz)){
         imprime_arvore_posordem(raiz->esq);
         imprime_arvore_posordem(raiz->dir);
-        printf("%c\t", raiz->info);
+        printf("%c", raiz->info);
+    }
+}
+
+void imprime_arvore_posordem_arquivo(No *raiz, FILE *file){
+    if (!no_vazio(raiz)){
+        imprime_arvore_posordem_arquivo(raiz->esq, file);
+        imprime_arvore_posordem_arquivo(raiz->dir, file);
+        fprintf(file, "%c", raiz->info);
     }
 }
 
@@ -128,5 +143,65 @@ void imprime_arvore(No *r){
 		}
 	}
 	putchar('\n');
+	libera_fila(fila);
+}
+
+
+void imprime_arvore_arquivo(FILE *file, No *r){
+		Fila *fila = cria_fila(); 
+	int h = arvore_altura(r); 
+	int linha = h-1;
+    int i;
+
+	if(r==NULL){
+		fprintf(file, "Arvoreore vazia!\n");
+		return;
+	}
+	
+	for(i=0;i<pow(2,h);i++) fprintf(file, " ");
+	fprintf(file, "%c\n",r->info);
+
+    insere_fila(fila, r->esq);
+    insere_fila(fila, r->dir);
+
+   	No *no_lido; 
+    int pot_atual=1;
+    int epl=0; 
+
+    while(linha>=0){
+		no_lido = retira_da_fila(fila);
+
+		if(no_lido != NULL){
+			for(i=0;i<pow(2,linha);i++) fprintf(file, " ");
+			fprintf(file, "%c",no_lido->info);			
+	
+			if(linha!=0){ 
+				for(i=0;i<((pow(2,linha+1)-1)-pow(2,linha));i++)fprintf(file, " "); 
+			}
+
+			insere_fila(fila,no_lido->esq);
+			insere_fila(fila,no_lido->dir);
+		}
+		else{
+			for(i=0;i<pow(2,linha);i++) fprintf(file, " ");
+			fprintf(file, " ");
+
+			if(linha!=0){ 
+				for(i=0;i<((pow(2,linha+1)-1)-pow(2,linha));i++)fprintf(file, " "); 
+			}
+
+			insere_fila(fila,NULL);
+			insere_fila(fila,NULL);
+		}
+		epl++;
+		
+		if(epl==pow(2,pot_atual)){
+			pot_atual++;
+			linha--;
+			epl=0;
+			fprintf(file, "\n");
+		}
+	}
+	fprintf(file, "\n");
 	libera_fila(fila);
 }
