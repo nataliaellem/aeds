@@ -31,10 +31,14 @@ void insere_fila(Fila *fila, char *info){
 
 
 void imprime_fila(Fila *fila){
-    Lista *aux;
+    if (fila->inicio == NULL){
+        printf("Fila vazia.\n");
+        return;
+    }
     printf("\n");
+    Lista *aux;
     for(aux = fila->inicio; aux != NULL; aux = aux->prox){
-        printf("%s - n° %d\t", aux->senha, aux->id);
+        printf("%s - id %d\t", aux->senha, aux->id);
     }
     printf("\n\n");
 }

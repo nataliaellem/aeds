@@ -26,9 +26,7 @@ char* le_info(){
 
 Fila* adicionar_tie_fighters(Fila* fila){
     system("clear");
-    printf("**************************************************************************************\n");
-    printf("****************** Adicionar uma Tie Fighters à lista de espera ******************\n");
-    printf("**************************************************************************************\n\n");
+    printf("********* Adicionar uma Tie Fighters à lista de espera *********\n\n");
     int identificador;
     printf("Informe o nome do piloto: ");
     char *nome_piloto = le_info();
@@ -44,9 +42,7 @@ Fila* adicionar_tie_fighters(Fila* fila){
 
 Fila* autorizar_decolagem(Fila *fila){
     system("clear");
-    printf("************************************************************************************************\n");
-    printf("****************** Autorizar a decolagem da primeira Tie Fighters da fila ******************\n\n");
-    printf("************************************************************************************************\n\n");
+    printf("********* Autorizar a decolagem da primeira Tie Fighters da fila *********\n\n");
     if (fila->inicio == NULL){
         printf("Não há Tie Fighters para decolagem.\n");
         return fila;
@@ -61,9 +57,7 @@ Fila* autorizar_decolagem(Fila *fila){
 
 int tie_fighters_aguardando(Fila *fila){
     system("clear");
-    printf("*********************************************************************************************************\n");
-    printf("****************** Listar o número de Tie Fighters aguardando na fila de decolagem ******************\n\n");
-    printf("*********************************************************************************************************\n\n");
+    printf("********* Listar o número de Tie Fighters aguardando na fila de decolagem *********\n\n");
     No *auxiliar = fila->inicio;
     if (auxiliar == NULL){
         printf("Não há Tie Fighter aguardando na fila.\n");
@@ -89,9 +83,7 @@ int tie_fighters_aguardando(Fila *fila){
 
 void lista_informacoes(Fila *fila){
     system("clear");
-    printf("********************************************************************************************************\n");
-    printf("****************** Listar todas as informações das Tie Fighters na fila de espera ******************\n\n");
-    printf("********************************************************************************************************\n\n");
+    printf("********** Listar todas as informações das Tie Fighters na fila de espera *********\n\n");
     No *aux = fila->inicio;
     if (aux == NULL){
         printf("Não há Tie Fighters na lista de espera.\n");

@@ -3,6 +3,9 @@
 #include <string.h>
 #include "fila.h"
 
+// O código contém alguns comandos para o linux, como "system(clear)" e "__fpurge(stdin)"
+
+
 // Função auxiliar para ler a descrição do processo
 
 char* le_info(){
