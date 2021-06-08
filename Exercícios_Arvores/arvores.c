@@ -60,9 +60,9 @@ void imprime_pre_ordem(No *raiz){
 // Ordem simétrica imprime
 void imprime_in_order(No *raiz){
     if (no_vazio(raiz) != 1){
-        imprime_pre_ordem(raiz->esq);
+        imprime_in_order(raiz->esq);
         printf("%c  ", raiz->info);
-        imprime_pre_ordem(raiz->dir);
+        imprime_in_order(raiz->dir);
     }
 }
 
@@ -70,8 +70,8 @@ void imprime_in_order(No *raiz){
 // Pós-ordem imprime
 void imprime_pos_ordem(No *raiz){
     if (no_vazio(raiz) != 1){
-        imprime_pre_ordem(raiz->esq);
-        imprime_pre_ordem(raiz->dir);
+        imprime_pos_ordem(raiz->esq);
+        imprime_pos_ordem(raiz->dir);
         printf("%c  ", raiz->info);
     }
 }
