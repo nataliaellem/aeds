@@ -3,7 +3,8 @@
 
 
 Node* cria_node(Aluno a){
-    Node *aux;
+
+    Node *aux = new Node;
     aux->aluno.set_nome(a.get_nome());
     aux->aluno.set_matricula(a.get_matricula());
     aux->left = nullptr;
@@ -33,6 +34,7 @@ void BST::inserir_aluno_helper(Node *node, Aluno a){
 
 
 void BST::inserir_aluno(Aluno aluno){
+
     if (this->root != nullptr){
         inserir_aluno_helper(this->root, aluno);
     }
@@ -56,18 +58,21 @@ void BST::imprimir_arvore(){
 }
 
 Aluno* procurar_aluno_helper(int mat, Node *node){
-    if (node->aluno.get_matricula() == mat){
-        return &node->aluno;
-    }
-    if (node->aluno.get_matricula() < mat){
-        return procurar_aluno_helper(mat, node->left);
-    }
-    if (node->aluno.get_matricula() < mat){
-        return procurar_aluno_helper(mat,node->right);
-    }
-    else {
+    if (node == nullptr){
         return nullptr;
     }
+    else if (node->aluno.get_matricula() == mat){
+        return &node->aluno;
+    }
+    else if (node->aluno.get_matricula() > mat){
+        return procurar_aluno_helper(mat, node->left);
+    }
+    else if (node->aluno.get_matricula() < mat){
+        return procurar_aluno_helper(mat,node->right);
+    }
+
+    return nullptr;
+
 
 }
 

@@ -2,23 +2,27 @@
 #include "avaliacao_basica_bst.hpp"
 #include "BST.hpp"
 
+
 using namespace std;
 
 
 int main() {
+
   
     // NÃO ALTERE ESSA LINHA
     avaliacao_basica();
 
 
-    //
-    // Adicione seu código aqui e faça as demais alterações necessárias
-    //
+    BST tree;
 
+    for(int i = 0; i < 10; i++){
+        Aluno a;
+        cin >> a.matricula;
+        cin >> a.nome;
+        tree.inserir_aluno(a);
+    }
 
-    //
-    // Ao final faça uma chamada para o método 'imprimir_arvore()'
-    //
+    tree.imprimir_arvore();
 
     return 0;
 }
