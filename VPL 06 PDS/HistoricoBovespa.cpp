@@ -4,14 +4,12 @@
 HistoricoBovespa::HistoricoBovespa(){}
 
 void HistoricoBovespa::inserir_cotacao(string sigla, string data, double valor){
-    
+
     Cotacao cotacao(data, valor);
     vector<Cotacao> auxiliar;
     this->cotacoes[sigla].push_back(cotacao);
-    int i = 0;
     for (Cotacao c : this->cotacoes[sigla]){
-        auxiliar[i] = c;
-        i++;
+        auxiliar.push_back(c);
     }
     this->cotacoes.insert(pair<string, vector<Cotacao>>(sigla, auxiliar));
 }
@@ -39,14 +37,20 @@ Cotacao* HistoricoBovespa::recuperar_cotacao_maxima_acao(string sigla){
         return nullptr;
     }
     double maior = cotacoes[sigla][0].get_valor();
-    Cotacao max_acao = cotacoes[sigla][0];
+   
+    Cotacao *max_acao;
+    max_acao->set_data(cotacoes[sigla][0].get_data());
+    max_acao->set_valor(cotacoes[sigla][0].get_valor());
+
     for (Cotacao c : cotacoes[sigla]){
         if (c.get_valor() > maior){
             maior = c.get_valor();
-            max_acao = c;
+            max_acao->set_data(c.get_data());
+            max_acao->set_valor(c.get_valor());
         }
     }
-    return &max_acao;
+    
+    return max_acao;
 }
 
 Cotacao* HistoricoBovespa::recuperar_cotacao_minima_acao(string sigla){
@@ -55,14 +59,31 @@ Cotacao* HistoricoBovespa::recuperar_cotacao_minima_acao(string sigla){
         return nullptr;
     }
     double menor = cotacoes[sigla][0].get_valor();
-    Cotacao min_acao = cotacoes[sigla][0];
+    Cotacao *min_acao;
+    min_acao->set_data(cotacoes[sigla][0].get_data());
+    min_acao->set_valor(cotacoes[sigla][0].get_valor());
     for (Cotacao c : cotacoes[sigla]){
         if (c.get_valor() < menor){
             menor = c.get_valor();
-            min_acao = c;
+            min_acao->set_data(c.get_data());
+            min_acao->set_valor(c.get_valor());
         }
     }
-    return &min_acao;
+    return min_acao;
 }
 
-void HistoricoBovespa::imprimir_estatisticas_completas(){}
+void HistoricoBovespa::imprimir_estatisticas_completas(){
+    
+    map<string, vector<Cotacao>>::iterator it;
+
+    for (it = this->cotacoes.begin(); it != cotacoes.end(); it++){
+        cout << it->first << " ";
+        for(Cotacao c : it->second){
+            cout << c.get_valor() << " ";
+        }
+        cout << "| " << recuperar_cotacao_minima_acao(it->first)->get_valor() << " ";
+        cout << recuperar_cotacao_maxima_acao(it->first)->get_valor() << " ";
+        cout << calcular_valor_medio_acao(it->first);
+        cout << endl;
+    }
+}
