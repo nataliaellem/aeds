@@ -34,11 +34,35 @@ bool ordena_por_valor(Cotacao a, Cotacao b){
 }
 
 Cotacao* HistoricoBovespa::recuperar_cotacao_maxima_acao(string sigla){
-    sort(cotacoes[sigla].begin(), cotacoes[sigla].end(), ordena_por_valor);
-    int n = cotacoes[sigla].end() - 1;
-    return c;
+    if (cotacoes[sigla].empty()){
+        cout << "esta sigla nao tem historico (max func)";
+        return nullptr;
+    }
+    double maior = cotacoes[sigla][0].get_valor();
+    Cotacao max_acao = cotacoes[sigla][0];
+    for (Cotacao c : cotacoes[sigla]){
+        if (c.get_valor() > maior){
+            maior = c.get_valor();
+            max_acao = c;
+        }
+    }
+    return &max_acao;
 }
 
-Cotacao* HistoricoBovespa::recuperar_cotacao_minima_acao(string sigla){}
+Cotacao* HistoricoBovespa::recuperar_cotacao_minima_acao(string sigla){
+    if (cotacoes[sigla].empty()){
+        cout << "esta sigla nao tem historico (min func)";
+        return nullptr;
+    }
+    double menor = cotacoes[sigla][0].get_valor();
+    Cotacao min_acao = cotacoes[sigla][0];
+    for (Cotacao c : cotacoes[sigla]){
+        if (c.get_valor() < menor){
+            menor = c.get_valor();
+            min_acao = c;
+        }
+    }
+    return &min_acao;
+}
 
 void HistoricoBovespa::imprimir_estatisticas_completas(){}
