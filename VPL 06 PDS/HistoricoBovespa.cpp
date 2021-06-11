@@ -38,9 +38,7 @@ Cotacao* HistoricoBovespa::recuperar_cotacao_maxima_acao(string sigla){
     }
     double maior = cotacoes[sigla][0].get_valor();
    
-    Cotacao *max_acao;
-    max_acao->set_data(cotacoes[sigla][0].get_data());
-    max_acao->set_valor(cotacoes[sigla][0].get_valor());
+    Cotacao *max_acao = new Cotacao(cotacoes[sigla][0].get_data(), cotacoes[sigla][0].get_valor());
 
     for (Cotacao c : cotacoes[sigla]){
         if (c.get_valor() > maior){
@@ -59,9 +57,8 @@ Cotacao* HistoricoBovespa::recuperar_cotacao_minima_acao(string sigla){
         return nullptr;
     }
     double menor = cotacoes[sigla][0].get_valor();
-    Cotacao *min_acao;
-    min_acao->set_data(cotacoes[sigla][0].get_data());
-    min_acao->set_valor(cotacoes[sigla][0].get_valor());
+    Cotacao *min_acao = new Cotacao(cotacoes[sigla][0].get_data(), cotacoes[sigla][0].get_valor());
+   
     for (Cotacao c : cotacoes[sigla]){
         if (c.get_valor() < menor){
             menor = c.get_valor();
