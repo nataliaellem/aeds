@@ -69,8 +69,10 @@ class LineProcessor {
       // linhas lidas.
       std::string linha;
       while (std::getline(_in, linha)) {
+        std::cout << linha;
+        _numLinhasLidas += 1;
         if (linhaValida(linha)) {
-          _numLinhasValidas++;
+          _numLinhasValidas += 1;
           processaLinha(linha);
         }
       }
@@ -89,10 +91,11 @@ class LineProcessor {
      * durante o processamento.
      */
     unsigned numeroDeLinhasLidas() const {
+
+      return _numLinhasLidas;
       // TODO: Implemente este metodo. Provavelmente serah necessario modificar
       // a implementacao do metodo processaEntrada, para que voce possa contar
       // o numero de linhas lidas.
-      return 0;
     }
 
 };

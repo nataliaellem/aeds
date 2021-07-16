@@ -54,12 +54,39 @@ void ContadorPopRural::processaLinha(const std::string &str) {
 
 bool ContadorNumNaturais::linhaValida(const std::string &str) const {
   // TODO: Implemente este metodo
-  return false;
+  
+  std::regex integer("[[:digit:]]+");
+  bool resp = true;
+  std::string s = "";
+	int aux = 0;
+  for (int i = 0; i < str.length(); i++){
+
+    if (str[i] != ' '){
+			s[aux] = str[i];
+			aux++;
+    }
+		else {
+      resp = (std::regex_match(s,integer));
+			s = "";
+			aux = 0;
+      if (resp == false){
+        return false;
+      }
+		}
+  }
+  return resp;
+  
 }
 
 void ContadorNumNaturais::processaLinha(const std::string &str) {
   // TODO: Implemente este metodo:
-  std::cout << "Imprime algo aqui!" << std::endl;
+  unsigned somador = 0;
+  std::string s = str;
+  for (int i = 0; i < s.length(); i++){
+    unsigned n = (unsigned)(s[i]);
+    somador += n;
+  }
+  std::cout << somador << std::endl;
 }
 
 bool LeitorDeFutebol::linhaValida(const std::string &str) const {
