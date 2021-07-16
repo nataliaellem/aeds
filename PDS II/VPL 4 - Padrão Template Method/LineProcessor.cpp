@@ -3,6 +3,8 @@
 #include <string>
 #include <vector>
 #include <sstream>
+#include <iostream>
+
 
 #include "LineProcessor.hpp"
 
@@ -55,63 +57,80 @@ void ContadorPopRural::processaLinha(const std::string &str) {
 bool ContadorNumNaturais::linhaValida(const std::string &str) const {
   // TODO: Implemente este metodo
   
-  std::regex integer("[[:digit:]]+");
-  bool resp = true;
-  std::string s = "";
-	int aux = 0;
-  for (int i = 0; i < str.length(); i++){
-
-    if (str[i] != ' '){
-			s[aux] = str[i];
-			aux++;
-    }
-		else {
-      resp = (std::regex_match(s,integer));
-			s = "";
-			aux = 0;
-      if (resp == false){
-        return false;
-      }
-		}
-  }
-  return resp;
+  std::regex regularExp("\\d+\\s*");
+  return std::regex_match(str, regularExp);
   
 }
 
+
 void ContadorNumNaturais::processaLinha(const std::string &str) {
   // TODO: Implemente este metodo:
-  unsigned somador = 0;
-  std::string s = str;
-  for (int i = 0; i < s.length(); i++){
-    unsigned n = (unsigned)(s[i]);
-    somador += n;
-  }
+  int somador = 0;
+  std::stringstream ss(str);
+	while (! ss.eof()){
+		int aux;
+		ss >> aux; 
+		somador += aux;
+	} 
   std::cout << somador << std::endl;
 }
 
 bool LeitorDeFutebol::linhaValida(const std::string &str) const {
   // TODO: Implemente este metodo
-  return false;
+	std::regex regularExp("\\w+\\s*\\d+\\s*\\w+\\s*\\d+");
+	return std::regex_match(str, regularExp);
 }
 
 void LeitorDeFutebol::processaLinha(const std::string &str) {
   // TODO: Implemente este metodo:
-  std::cout << "Imprime algo aqui!" << std::endl;
+	std::stringstream ss(str);
+	while (! ss.eof()){
+		std::string time1, time2;
+		int pontos_t1, pontos_t2;
+		ss >> time1 >> pontos_t1 >> time2 >> pontos_t2;
+
+		if (pontos_t1 > pontos_t2){
+	  	std::cout << "Vencedor: " << time1 << std::endl;
+		}
+		else if (pontos_t2 > pontos_t1){
+	  	std::cout << "Vencedor: " << time2 << std::endl;
+		}
+		else if (pontos_t1 == pontos_t2){
+			std::cout << "Empate" << std::endl;
+		}
+	}
 }
 
 void ContadorDePalavras::processaLinha(const std::string &str) {
   // TODO: Implemente este metodo:
-  std::cout << "Imprime algo aqui!" << std::endl;
+	std::stringstream ss(str);
+	int contador = 0;
+	while (! ss.eof()){
+		std::string palavra;
+		ss >> palavra;
+		contador++;
+	}
+  std::cout << contador << std::endl;
 }
 
 bool InversorDeFrases::linhaValida(const std::string &str) const {
   // TODO: Implemente este metodo
-  return false;
+  std::regex regExp("[A-Za-z ]+");
+  return std::regex_match(str, regExp);
 }
 
 void InversorDeFrases::processaLinha(const std::string &str) {
   // TODO: Implemente este metodo:
-  std::cout << "Imprime algo aqui!" << std::endl;
+  std::vector <std::string> palavras;
+  std::stringstream s(str);
+  int i = 0;
+  while(! s.eof()){
+	  s >> palavras[i];
+	  i++;
+  }
+  for (i; i >= 0; i--){
+  	std::cout << palavras[i] << std::endl;
+  }
 }
 
 bool EscritorDeDatas::linhaValida(const std::string &str) const {
@@ -119,7 +138,48 @@ bool EscritorDeDatas::linhaValida(const std::string &str) const {
   // TODO: Implemente este metodo
   // Note que você pode usar uma expressao regular como:
   // "\\s*\\d\\d?/\\d\\d?/\\d{4}" para saber se a linha eh valida:
-  return false;
+	std::regex regularExp(dateFormat);
+	return std::regex_match(str, regularExp);
+}
+
+
+// função auxiliar
+
+std::string retornaMes(char c){
+	std::string mes;
+	switch (c) {
+		case '1':
+			mes = "Jan";
+			break;
+		case '2':
+			mes = "Fev";
+			break;
+		case '3':
+			mes = "Mar";
+			break;
+		case '4':
+			mes = "Abr";
+			break;
+		case '5':
+			mes = "Mai";
+			break;
+		case '6':
+			mes = "Jun";
+			break;
+		case '7':
+			mes = "Jul";
+			break;
+		case '8':
+			mes = "Ago";
+			break;
+		case '9':
+			mes = "Set";
+			break;
+		default:
+			break;
+	}
+	return mes;
+
 }
 
 void EscritorDeDatas::processaLinha(const std::string &str) {
@@ -127,5 +187,33 @@ void EscritorDeDatas::processaLinha(const std::string &str) {
   // Lembre-se que as iniciais dos meses sao:
   // "Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out",
   // "Nov", e "Dez".
-  std::cout << "Imprime algo aqui!" << std::endl;
+	std::string mes;
+	for (int i = 0; i < str.size(); i++){
+		//Quando chegar na primeira barra significa que o(s) próximo(s)
+		//dígitos serão do mes
+		if (str[i] == '/'){
+			if (str[i+1] == '0'){
+				mes = retornaMes(str[i+2]);
+			}
+			else if (str[i+1] != '0' && str[i+2] == '/'){
+				mes = retornaMes(str[i+1]);
+			}
+
+			// Caso seja um dos meses: 10, 11 e 12
+			else if (str[i+1] != '0' && str[i+2] != '/') {
+				if (str[i+2] == '0'){
+					mes = "Out";
+				}
+				else if (str[i+2] == '1'){
+					mes = "Nov";
+				}
+				else if (str[i+2] == '2'){
+					mes = "Dez";
+				}
+			}
+  		std::cout << mes << std::endl;
+		return; 
+		}
+	}
+
 }
