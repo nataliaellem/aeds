@@ -69,7 +69,6 @@ class LineProcessor {
       // linhas lidas.
       std::string linha;
       while (std::getline(_in, linha)) {
-        std::cout << linha;
         _numLinhasLidas += 1;
         if (linhaValida(linha)) {
           _numLinhasValidas += 1;
