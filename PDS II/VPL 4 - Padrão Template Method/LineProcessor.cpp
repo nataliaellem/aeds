@@ -62,17 +62,16 @@ bool ContadorNumNaturais::linhaValida(const std::string &str) const {
   
 }
 
-
 void ContadorNumNaturais::processaLinha(const std::string &str) {
-  // TODO: Implemente este metodo:
-  int somador = 0;
+
+ /* int somador = 0;
   std::stringstream ss(str);
 	while (! ss.eof()){
 		int aux;
 		ss >> aux; 
 		somador += aux;
 	} 
-  std::cout << somador << std::endl;
+  std::cout << somador << std::endl; */
 }
 
 bool LeitorDeFutebol::linhaValida(const std::string &str) const {
@@ -114,30 +113,30 @@ void ContadorDePalavras::processaLinha(const std::string &str) {
 }
 
 bool InversorDeFrases::linhaValida(const std::string &str) const {
-  // TODO: Implemente este metodo
   std::regex regExp("[A-Za-z ]+");
   return std::regex_match(str, regExp);
 }
 
 void InversorDeFrases::processaLinha(const std::string &str) {
-  // TODO: Implemente este metodo:
-  std::vector <std::string> palavras;
-  std::stringstream s(str);
-  int i = 0;
-  while(! s.eof()){
-	  s >> palavras[i];
-	  i++;
+
+  std::vector <std::string> palavras{};
+	std::string s = str;
+  
+  std::string space = " ";
+	size_t pos;
+	while ((pos = s.find(space)) != std::string::npos) {
+		palavras.push_back(s.substr(0, pos));
+		s.erase(0, pos + space.length());
+	}
+
+  for (int i = palavras.size() - 1; i >= 0; i--){
+  	std::cout << palavras[i] << " ";
   }
-  for (i; i >= 0; i--){
-  	std::cout << palavras[i] << std::endl;
-  }
+	std::cout << std::endl;
 }
 
 bool EscritorDeDatas::linhaValida(const std::string &str) const {
-  std::string dateFormat = "\\s*\\d\\d?/\\d\\d?/\\d{4}";
-  // TODO: Implemente este metodo
-  // Note que você pode usar uma expressao regular como:
-  // "\\s*\\d\\d?/\\d\\d?/\\d{4}" para saber se a linha eh valida:
+  	std::string dateFormat = "\\s*\\d\\d?/\\d\\d?/\\d{4}";
 	std::regex regularExp(dateFormat);
 	return std::regex_match(str, regularExp);
 }

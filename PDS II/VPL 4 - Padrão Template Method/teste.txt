@@ -1,10 +1,7 @@
-2
-1 2 3
-1 -2 3
-4 5
-+4 5
-6 7
-Seis Sete
-8 Nove
-8 9
-.
+5
+Voce poderia inverter esta
+frase questionMark
+E esta frase?
+Voce poderia inverte-la
+Sim, eu poderia
+Sim sim

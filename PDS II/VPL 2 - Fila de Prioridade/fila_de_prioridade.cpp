@@ -17,15 +17,6 @@ string FilaDePrioridade::primeiro() const {
 
     if (this->primeiro_ != nullptr){
         return this->primeiro_->nome;
-   /*     int maior = primeiro_->idade;
-        string first = primeiro_->nome;
-        for (No *aux = primeiro_; aux != nullptr; aux = aux->next){
-            if (aux->idade > maior){
-                maior = aux->idade;
-                first = aux->nome;
-            }
-        }
-        return first; */
     } 
     else {
         return "\nFila vazia\n";
