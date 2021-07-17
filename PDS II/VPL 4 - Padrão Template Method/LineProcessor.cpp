@@ -76,7 +76,7 @@ void ContadorNumNaturais::processaLinha(const std::string &str) {
 
 bool LeitorDeFutebol::linhaValida(const std::string &str) const {
   // TODO: Implemente este metodo
-	std::regex regularExp("\\w+\\s*\\d+\\s*\\w+\\s*\\d+");
+	std::regex regularExp("\\s*\\w+\\s*\\d+\\s*\\w+\\s*\\d+");
 	return std::regex_match(str, regularExp);
 }
 
@@ -113,13 +113,17 @@ void ContadorDePalavras::processaLinha(const std::string &str) {
 }
 
 bool InversorDeFrases::linhaValida(const std::string &str) const {
-  std::regex regExp("[A-Za-z ]+");
-  return std::regex_match(str, regExp);
+  std::regex regExp("^[[:alpha:]]+$");
+	bool resp = std::regex_match(str, regExp);
+	if (resp == true) {
+		std::cout << str;
+	}
+  return resp;
 }
 
 void InversorDeFrases::processaLinha(const std::string &str) {
 
-  std::vector <std::string> palavras{};
+  /* std::vector <std::string> palavras{};
 	std::string s = str;
   
   std::string space = " ";
@@ -132,7 +136,7 @@ void InversorDeFrases::processaLinha(const std::string &str) {
   for (int i = palavras.size() - 1; i >= 0; i--){
   	std::cout << palavras[i] << " ";
   }
-	std::cout << std::endl;
+	std::cout << std::endl; */
 }
 
 bool EscritorDeDatas::linhaValida(const std::string &str) const {
