@@ -1,0 +1,14 @@
+i
+3
+3
+cozinha 6
+quarto 10
+banheiro 4
+4
+cozinha 12
+quarto 10
+quarto 14
+banheiro 4
+2
+quarto 12
+banheiro 5
