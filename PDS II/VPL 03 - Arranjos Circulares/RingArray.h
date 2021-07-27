@@ -9,7 +9,7 @@
  */
 template <class T, unsigned N> class RingArray {
   public:
-    RingArray(): _first(0), _last(0) {}
+    RingArray(): _first(0), _last(0), quantidade_elementos(0) {}
     /**
      * \brief This method adds a new value into the array. If the array is full,
      * then this method stops the program. After inserting an element in the
@@ -38,10 +38,13 @@ template <class T, unsigned N> class RingArray {
      */
     bool isEmpty() const;
 
+
   private:
     unsigned _first; ///< The index of the oldest element in the array.
     unsigned _last; ///< The index of the next empty spot in the array.
+    unsigned quantidade_elementos;
     T buf[N]; ///< The buffer that stores the data in the array.
+
 };
 
 #endif

@@ -12,21 +12,54 @@ void fer_assert(const bool expr, const char* msg) {
 template <class T, unsigned N>
 void RingArray<T, N>::add(T value) {
   // TODO: implement this method.
+  fer_assert(!this->isFull(), "anel cheio");
+  
+  this->buf[this->_last] = value;
+  this->quantidade_elementos++;
+
+  if (this->_last == N-2){ //Nesse caso já sabe-se que o array não está cheio
+    this->_last = 0;
+    return;
+  }
+  this->_last++;
+
 }
 
 template <class T, unsigned N>
 T RingArray<T, N>::get() {
   // TODO: implement this method.
+  fer_assert(!isEmpty(), "anel vazio.");
+  T elemen = this->buf[_first];
+  //this->buf[_first] = NULL;
+
+  if (this->_first == N-2){
+    this->_first = 0;
+  }
+  else {
+    this->_first ++;
+  }
+  quantidade_elementos --;
+  return elemen;
 }
 
 template <class T, unsigned N>
 bool RingArray<T, N>::isFull() const {
   // TODO: implement this method.
+  if (this->quantidade_elementos == N-1){
+    return true;
+  }
+  
+  return false;
+
 }
 
 template <class T, unsigned N>
 bool RingArray<T, N>::isEmpty() const {
   // TODO: implement this method.
+  if (this->quantidade_elementos == 0){
+    return true;
+  }
+  return false;
 }
 
 template <class T>
