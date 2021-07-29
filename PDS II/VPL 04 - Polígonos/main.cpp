@@ -83,6 +83,8 @@ unsigned hasEqualFigures() {
   for (unsigned i = 0; i < polygons.size() - 1; i++) {
     for (unsigned j = i+1; j < polygons.size(); j++) {
       if (*polygons[i] == *polygons[j]) {
+        std::cout << "i: " << polygons[i]->operator const std::vector<Point, std::allocator<Point>> &()[0].x << std::endl;
+        std::cout << "j: " << polygons[j]->operator const std::vector<Point, std::allocator<Point>> &()[0].x << std::endl;
         return true;
       }
     }
